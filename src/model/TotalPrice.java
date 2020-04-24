@@ -1,5 +1,6 @@
 package model;
 
+import model.dto.ItemInformation;
 import model.dto.PriceInfo;
 
 /**
@@ -29,12 +30,14 @@ public class TotalPrice {
 	 * @param item Item whose price is getting added to the total. 
 	 */
 	void addToTotalPrice(Item item) {
-		totalPriceAmount = totalPriceAmount.add(item.getPrice().multiply(item.getQuantity()));
+		ItemInformation itemInfo = item.getItemInformation();
 		
-		Amount itemPriceNoVat = item.getItemDescription().getPriceInfo().getPriceAmount();
-		Amount itemVatRate = item.getItemDescription().getPriceInfo().getVatRate();
+		totalPriceAmount = totalPriceAmount.add(itemInfo.getPrice().multiply(itemInfo.getQuantity()));
 		
-		addToTotalVat(new Amount(((itemPriceNoVat.multiply(itemVatRate)).multiply(item.getQuantity())).getValue()));
+		Amount itemPriceNoVat = itemInfo.getItemDescription().getPriceInfo().getPriceAmount();
+		Amount itemVatRate = itemInfo.getItemDescription().getPriceInfo().getVatRate();
+		
+		addToTotalVat(new Amount(((itemPriceNoVat.multiply(itemVatRate)).multiply(itemInfo.getQuantity())).getValue()));
 	}
 	
 	private void addToTotalVat(Amount itemVatAmount) {

@@ -47,9 +47,7 @@ public class InventorySystem {
 	public void updateInventory(SaleInformation saleInfo) {
 		List<Item> itemList = saleInfo.getListOfSoldItems();
 		
-		for(Item i : itemList) {
-			
-		}
+		
 	}
 
 	private void createDatabaseEntry(ItemData itemDataObject) {

@@ -1,10 +1,12 @@
 package model;
 
 import integration.ItemDescription;
+import model.dto.ItemInformation;
 import model.dto.ItemPrice;
 
 /**
- * This class represents an item that's being processed in the sale.
+ * This class represents an unique item that's being processed in the sale. That means 
+ * that multiple identical items are represented by one single object.
  * @author kim
  *
  */
@@ -13,6 +15,7 @@ public class Item {
 	private ItemDescription description;
 	private int quantity;
 	private Amount price;
+	private ItemInformation itemInfo;
 
 	/**
 	 * Constructs a new <code>Item</code> and initializes its description and
@@ -29,16 +32,13 @@ public class Item {
 		price = calculateItemPrice(description.getPriceInfo());
 	}
 	
-	public Amount getPrice() {
-		return price;
-	}
-	
-	int getQuantity() {
-		return quantity;
-	}
-	
-	ItemDescription getItemDescription() {
-		return description;
+	/**
+	 * Returns a container object with information about the specific items accumulated price,
+	 * purchased quantity and the item description for the item.
+	 * @return An {@link ItemInformation} object.
+	 */
+	public ItemInformation getItemInformation() {
+		return new ItemInformation(description, price, quantity);
 	}
 	
 	void addToQuantity(int quantityToAdd) {
@@ -68,7 +68,7 @@ public class Item {
 	public boolean equals(Object anObject) {
 		if(anObject instanceof Item) {
 			Item item = (Item) anObject;
-			return this.description.equals(item.getItemDescription());
+			return this.description.equals(item.getItemInformation().getItemDescription());
 		}
 		
 		return false;
