@@ -1,9 +1,10 @@
-package model;
+package model.dto;
 
 import java.time.LocalTime;
+import java.util.ArrayList;
 import java.util.List;
 
-import model.dto.PriceInfo;
+import model.Item;
 
 /**
  * A data container for all the available information about the sale, such as time of sale,
@@ -14,7 +15,7 @@ import model.dto.PriceInfo;
 public class SaleInformation {
 	private final LocalTime time;
 	private final PriceInfo priceInfo;
-	private final List<Item> itemList;
+	private final List<ItemInformation> itemList;
 
 	/**
 	 * Constructs an object that contains the information about the current state of
@@ -25,10 +26,12 @@ public class SaleInformation {
 	 * @param totalPrice An <code>Amount</code>
 	 * @param itemList
 	 */
-	SaleInformation(LocalTime time, PriceInfo priceInfo, List<Item> itemList) {
+	public SaleInformation(LocalTime time, PriceInfo priceInfo, List<Item> itemList) {
 		this.time = time;
 		this.priceInfo = priceInfo;
-		this.itemList = itemList;
+		
+		this.itemList = new ArrayList<>(); 
+		createImmutableItemList(itemList);
 	}
 
 	/**
@@ -54,8 +57,16 @@ public class SaleInformation {
 	 * 
 	 * @return A <code>List</code> of {@link Item} objects.
 	 */
-	public List<Item> getListOfSoldItems() {
+	public List<ItemInformation> getListOfSoldItems() {
 		return itemList;
+	}
+	
+	private List<ItemInformation> createImmutableItemList(List<Item> itemList) {
+		for(Item i : itemList) {
+			this.itemList.add(i.getItemInformation());
+		}
+		
+		return this.itemList;
 	}
 
 	/**
@@ -65,7 +76,7 @@ public class SaleInformation {
 	 */
 	public String toString() {
 		StringBuilder sb = new StringBuilder();
-		for (Item i : itemList) {
+		for (ItemInformation i : itemList) {
 			sb.append(i.toString() + "\n");
 		}
 

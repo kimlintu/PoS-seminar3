@@ -6,6 +6,7 @@ import java.util.List;
 
 import integration.ItemDescription;
 import integration.dbhandler.InventorySystem;
+import model.dto.SaleInformation;
 
 /**
  * This class represents the ongoing sale. 

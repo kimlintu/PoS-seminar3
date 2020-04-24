@@ -12,8 +12,8 @@ import integration.ItemDescription;
 import model.Amount;
 import model.IdentificationNumber;
 import model.Sale;
-import model.SaleInformation;
 import model.dto.ItemPrice;
+import model.dto.SaleInformation;
 
 class SaleInformationTest {
 	private Sale sale;

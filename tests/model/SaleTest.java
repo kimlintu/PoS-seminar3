@@ -13,7 +13,9 @@ import org.junit.jupiter.api.Test;
 import controller.Controller;
 import integration.ItemDescription;
 import integration.dbhandler.SystemCreator;
+import model.dto.ItemInformation;
 import model.dto.ItemPrice;
+import model.dto.SaleInformation;
 
 class SaleTest {
 	SystemCreator creator;
@@ -67,9 +69,9 @@ class SaleTest {
 		SaleInformation saleInfo = sale.getSaleInformation();
 		Amount totalPrice = saleInfo.getPriceInfo().getTotalPrice();
 		Amount totalVat = saleInfo.getPriceInfo().getTotalVat();
-		List<Item> itemList = saleInfo.getListOfSoldItems();
+		List<ItemInformation> itemList = saleInfo.getListOfSoldItems();
 		
-		Item expectedItem = new Item(newItem, purchasedQuantity);
+		ItemInformation expectedItem = new Item(newItem, purchasedQuantity).getItemInformation();
 		assertTrue(itemList.contains(expectedItem), "Purchased item list does not contain the added item.");
 		
 		Amount expectedPrice = new Amount(itemPrice.add(vatTax).getValue());
@@ -98,9 +100,9 @@ class SaleTest {
 		SaleInformation saleInfo = sale.getSaleInformation();
 		Amount totalPrice = saleInfo.getPriceInfo().getTotalPrice();
 		Amount totalVat = saleInfo.getPriceInfo().getTotalVat();
-		List<Item> itemList = saleInfo.getListOfSoldItems();
+		List<ItemInformation> itemList = saleInfo.getListOfSoldItems();
 		
-		Item expectedItem = new Item(newItem, purchasedQuantity);
+		ItemInformation expectedItem = new Item(newItem, purchasedQuantity).getItemInformation();
 		assertTrue(itemList.contains(expectedItem), "Purchased item list does not contain the added item.");
 		
 		Amount expectedPrice = new Amount(itemPrice.add(vatTax).getValue()).multiply(2);
@@ -132,13 +134,13 @@ class SaleTest {
 		SaleInformation saleInfo = sale.getSaleInformation();
 		Amount totalPrice = saleInfo.getPriceInfo().getTotalPrice();
 		Amount totalVat = saleInfo.getPriceInfo().getTotalVat();
-		List<Item> itemList = saleInfo.getListOfSoldItems();
+		List<ItemInformation> itemList = saleInfo.getListOfSoldItems();
 		
 
-		Item expectedItemApple = new Item(itemApple, 1);
+		ItemInformation expectedItemApple = new Item(itemApple, 1).getItemInformation();
 		assertTrue(itemList.contains(expectedItemApple), "Purchased item list does not contain the added item.");
 		
-		Item expectedItemOrange = new Item(itemOrange, 1);
+		ItemInformation expectedItemOrange = new Item(itemOrange, 1).getItemInformation();
 		assertTrue(itemList.contains(expectedItemOrange), "Purchased item list does not contain the added item.");
 
 		Amount expectedPrice = new Amount(((applePrice.add(appleVatTax)).add(orangePrice.add(orangeVatTax))).getValue());
@@ -165,9 +167,9 @@ class SaleTest {
 		SaleInformation saleInfo = sale.getSaleInformation();
 		Amount totalPrice = saleInfo.getPriceInfo().getTotalPrice();
 		Amount totalVat = saleInfo.getPriceInfo().getTotalVat();
-		List<Item> itemList = saleInfo.getListOfSoldItems();
+		List<ItemInformation> itemList = saleInfo.getListOfSoldItems();
 		
-		Item expectedItem = new Item(newItem, purchasedQuantity);
+		ItemInformation expectedItem = new Item(newItem, purchasedQuantity).getItemInformation();
 		assertTrue(itemList.contains(expectedItem), "Purchased item list does not contain the added item.");
 		
 		Amount expectedPrice = new Amount(itemPrice.add(vatTax).getValue()).multiply(purchasedQuantity);

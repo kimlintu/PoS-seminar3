@@ -9,8 +9,8 @@ import integration.dbhandler.SystemCreator;
 import integration.printer.Printer;
 import model.IdentificationNumber;
 import model.Sale;
-import model.SaleInformation;
 import model.dto.PriceInfo;
+import model.dto.SaleInformation;
 
 /**
  * Handles all the system operations in the program. 
@@ -66,7 +66,7 @@ public class Controller {
 	 * specified <code>itemID</code>
 	 */
 	public ItemDescription processItem(IdentificationNumber itemID, int quantity) {
-		ItemDescription itemDescription = inventorySystem.findItem(itemID);
+		ItemDescription itemDescription = inventorySystem.getItemDescriptionFromDatabase(itemID);
 		currentSale.addItemToSale(itemDescription, quantity);
 		
 		return itemDescription;

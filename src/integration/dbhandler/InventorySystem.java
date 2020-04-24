@@ -6,24 +6,24 @@ import java.util.List;
 import integration.ItemDescription;
 import model.Amount;
 import model.IdentificationNumber;
-import model.Item;
-import model.SaleInformation;
+import model.dto.ItemInformation;
 import model.dto.ItemPrice;
+import model.dto.SaleInformation;
 
 public class InventorySystem {
 	private List<ItemData> itemDB;
 
 	InventorySystem() {
 		itemDB = new ArrayList<>();
-		
+
 		createDatabaseEntry(new ItemData(new ItemDescription("apple", new ItemPrice(new Amount(5), new Amount(0.1)),
 				new IdentificationNumber(123)), 54));
 		createDatabaseEntry(new ItemData(new ItemDescription("coffee", new ItemPrice(new Amount(42), new Amount(0.2)),
 				new IdentificationNumber(666)), 12));
-		createDatabaseEntry(new ItemData(new ItemDescription("orange juice", new ItemPrice(new Amount(12), new Amount(0.1)),
-				new IdentificationNumber(492)), 5));
-		createDatabaseEntry(new ItemData(new ItemDescription("chocolate bar", new ItemPrice(new Amount(10), new Amount(0.1)),
-				new IdentificationNumber(876)), 1));
+		createDatabaseEntry(new ItemData(new ItemDescription("orange juice",
+				new ItemPrice(new Amount(12), new Amount(0.1)), new IdentificationNumber(492)), 5));
+		createDatabaseEntry(new ItemData(new ItemDescription("chocolate bar",
+				new ItemPrice(new Amount(10), new Amount(0.1)), new IdentificationNumber(876)), 1));
 	}
 
 	/**
@@ -35,7 +35,7 @@ public class InventorySystem {
 	 * @return The {@link ItemDescription} if its id matches the
 	 *         <code>itemID</code>, otherwise <code>null</code>.
 	 */
-	public ItemDescription findItem(IdentificationNumber itemID) {
+	public ItemDescription getItemDescriptionFromDatabase(IdentificationNumber itemID) {
 		for (ItemData itemDataObject : itemDB) {
 			if (itemDataObject.getItemDescription().getID().equals(itemID))
 				return itemDataObject.getItemDescription();
@@ -43,11 +43,45 @@ public class InventorySystem {
 
 		return null;
 	}
+
+	/**
+	 * Updates the quantity of the sold items processed in the sale.
+	 * @param saleInfo The information about the sale. Contains the list 
+	 * of sold items.
+	 */
+	public void updateQuantityOfSoldItems(SaleInformation saleInfo) {
+		List<ItemInformation> itemList = saleInfo.getListOfSoldItems();
+
+		for (ItemInformation itemInfo : itemList) {
+			for (ItemData itemData : itemDB) {
+				IdentificationNumber searchedItemID = itemInfo.getItemDescription().getID();
+				
+				if (matches(searchedItemID, itemData)) {
+					itemData.decreaseQuantity(itemInfo.getQuantity());
+				}
+			}
+		}
+	}
 	
-	public void updateInventory(SaleInformation saleInfo) {
-		List<Item> itemList = saleInfo.getListOfSoldItems();
+	/**
+	 * Returns the available quantity of an item stored in the database.
+	 * @param itemID The unique ID of the corresponding item.
+	 * @return The available quantity as an <code>int</code>.
+	 */
+	public int getAvailableQuantityOfItem(IdentificationNumber itemID) {
+		for(ItemData itemData : itemDB) {
+			if(matches(itemID, itemData)) {
+				return itemData.getAvailableQuantity();
+			}
+		}
 		
-		
+		return 0;
+	}
+
+	private boolean matches(IdentificationNumber searchedItemID, ItemData itemData) {
+		IdentificationNumber storedItemID = itemData.getItemDescription().getID();
+
+		return searchedItemID.equals(storedItemID);
 	}
 
 	private void createDatabaseEntry(ItemData itemDataObject) {

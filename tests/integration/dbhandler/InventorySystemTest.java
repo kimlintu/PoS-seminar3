@@ -1,4 +1,6 @@
 package integration.dbhandler;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.junit.jupiter.api.Assertions.fail;
 
@@ -9,15 +11,18 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import integration.ItemDescription;
-import integration.dbhandler.InventorySystem;
+import model.Amount;
 import model.IdentificationNumber;
+import model.Sale;
+import model.dto.ItemPrice;
+import model.dto.SaleInformation;
 
 class InventorySystemTest {
 	private InventorySystem inventory;
-	
+
 	@BeforeAll
 	static void setUpBeforeClass() throws Exception {
-		
+
 	}
 
 	@AfterAll
@@ -37,20 +42,39 @@ class InventorySystemTest {
 	@Test
 	void testFindExistingItem() {
 		IdentificationNumber existingID = new IdentificationNumber(123);
-		ItemDescription description = inventory.findItem(existingID); 
-		
+		ItemDescription description = inventory.getItemDescriptionFromDatabase(existingID);
+
 		assertTrue(description.getID().equals(existingID), "ID " + existingID + " "
-				+ "does not match entry description retrieved from database with ID " +  description.getID() + ".");
+				+ "does not match entry description retrieved from database with ID " + description.getID() + ".");
 	}
-	
+
 	@Test
 	void testFindItemUsingInvalidID() {
 		IdentificationNumber invalidID = new IdentificationNumber(981237);
-		ItemDescription itemDescription = inventory.findItem(invalidID); 
-		
-		if(itemDescription != null) {
-			fail("Item " + itemDescription + " was retrieved using nonexisting ID " + invalidID + ", expected null. " );
+		ItemDescription itemDescription = inventory.getItemDescriptionFromDatabase(invalidID);
+
+		if (itemDescription != null) {
+			fail("Item " + itemDescription + " was retrieved using nonexisting ID " + invalidID + ", expected null. ");
 		}
+	}
+
+	@Test
+	void testUpdateQuantityOfStoredItem() {
+		Sale sale = new Sale();
+		IdentificationNumber existingItemID = new IdentificationNumber(123);
+		int quantityBeforeUpdate = inventory.getAvailableQuantityOfItem(existingItemID);
+
+		sale.addItemToSale(inventory.getItemDescriptionFromDatabase(existingItemID), 12);
+		SaleInformation saleInfo = sale.getSaleInformation();
+		
+		int expectedQuantityAfterUpdate = quantityBeforeUpdate - 12;
+
+		inventory.updateQuantityOfSoldItems(saleInfo);
+		int quantityAfterUpdate = inventory.getAvailableQuantityOfItem(existingItemID);
+
+		assertEquals(expectedQuantityAfterUpdate, quantityAfterUpdate,
+				"Quantity in inventory stock has not been updated for purchased item. Expected "
+						+ expectedQuantityAfterUpdate + " but got " + quantityAfterUpdate);
 	}
 
 }

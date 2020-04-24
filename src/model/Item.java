@@ -15,7 +15,6 @@ public class Item {
 	private ItemDescription description;
 	private int quantity;
 	private Amount price;
-	private ItemInformation itemInfo;
 
 	/**
 	 * Constructs a new <code>Item</code> and initializes its description and
@@ -53,7 +52,9 @@ public class Item {
 		Amount itemPriceAmount = priceInfo.getPriceAmount();
 		Amount itemVatRate = priceInfo.getVatRate();
 		
-		return new Amount(itemPriceAmount.add(itemPriceAmount.multiply(itemVatRate)).getValue());
+		Amount itemVatTax = itemPriceAmount.multiply(itemVatRate);
+		
+		return new Amount(itemPriceAmount.add(itemVatTax).getValue());
 	}
 	
 	/**
@@ -72,9 +73,5 @@ public class Item {
 		}
 		
 		return false;
-	}
-	
-	public String toString() {
-		return "[" + description.getName() + ", " + price + ", " + quantity + "]";
 	}
 }
