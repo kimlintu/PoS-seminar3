@@ -16,7 +16,7 @@ public class SaleInformation {
 	private final LocalTime time;
 	private final PriceInfo priceInfo;
 	private final List<ItemInformation> itemList;
-
+	
 	/**
 	 * Constructs an object that contains the information about the current state of
 	 * the sale.

@@ -1,6 +1,7 @@
 package controller;
 
 import integration.ItemDescription;
+import integration.cashregister.CashRegister;
 import integration.dbhandler.AccountingSystem;
 import integration.dbhandler.DiscountSystem;
 import integration.dbhandler.InventorySystem;
@@ -22,7 +23,9 @@ public class Controller {
 	private DiscountSystem discountSystem;
 	private AccountingSystem accountingSystem;
 	private SaleLog saleLog;
+	
 	private Printer printer;
+	private CashRegister cashRegister;
 	
 	private Sale currentSale;
 	private SaleInformation saleInfo;
@@ -41,6 +44,7 @@ public class Controller {
 		saleLog = creator.getSaleLog();
 		
 		printer = new Printer();
+		cashRegister = new CashRegister();
 	}
 	
 	/**
