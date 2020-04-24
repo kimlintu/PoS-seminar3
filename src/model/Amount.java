@@ -28,6 +28,15 @@ public class Amount {
 	}
 	
 	/**
+	 * Adds together two <code>Amount</code> values.
+	 * @param amountToAdd The other amount to add.
+	 * @return A new <code>Amount</code> with the resulting sum as its value.
+	 */
+	public Amount subtract(Amount amountToSubtract) {
+		return new Amount(this.getValue() - amountToSubtract.getValue());
+	}
+	
+	/**
 	 * Multiplies two <code>Amount</code> values.
 	 * @param amountToAdd The multiplier.
 	 * @return A new <code>Amount</code> with the resulting product as its value.
