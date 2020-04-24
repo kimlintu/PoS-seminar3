@@ -50,7 +50,7 @@ public class Controller {
 		currentSale = new Sale();
 	}
 	
-	public PriceInfo stopSale() {
+	public PriceInfo endSale() {
 		saleInfo = currentSale.getSaleInformation();
 		
 		return saleInfo.getPriceInfo();

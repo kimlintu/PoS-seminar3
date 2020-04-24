@@ -14,7 +14,15 @@ public class View {
 		controller.startSale();
 	}
 	
-	public void enterItemIdentifier(IdentificationNumber itemID, int quantity) {
+	public void endSale() {
+		controller.endSale();
+	}
+	
+	public void enterItemIdentifier(IdentificationNumber itemID, int quantity, boolean multipleItems) {
+		if(!multipleItems) {
+			controller.processItem(itemID, 1);
+		}
+
 		controller.processItem(itemID, quantity);
 	}
 }

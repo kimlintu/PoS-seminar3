@@ -61,7 +61,7 @@ class ControllerTest {
 		Amount expectedTotalPrice = new Amount((5 + (5 * 0.1)) * 3);
 		Amount expectedTotalVat = new Amount((5 * 0.1) * 3);
 
-		PriceInfo priceInfo = controller.stopSale();
+		PriceInfo priceInfo = controller.endSale();
 		Amount receivedTotalPrice = priceInfo.getTotalPrice();
 		Amount receivedTotalVat = priceInfo.getTotalVat();
 
