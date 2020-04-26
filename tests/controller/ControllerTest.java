@@ -8,12 +8,12 @@ import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import integration.ItemDescription;
 import integration.dbhandler.SystemCreator;
-import model.Amount;
-import model.IdentificationNumber;
+import integration.dbhandler.data.ItemDescription;
 import model.dto.ItemPrice;
 import model.dto.PriceInformation;
+import model.util.Amount;
+import model.util.IdentificationNumber;
 
 class ControllerTest {
 	private Controller controller;

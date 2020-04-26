@@ -2,7 +2,7 @@ package startup;
 
 import controller.Controller;
 import integration.dbhandler.SystemCreator;
-import model.IdentificationNumber;
+import model.util.IdentificationNumber;
 import view.View;
 
 public class Main {

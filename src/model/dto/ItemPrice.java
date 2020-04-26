@@ -1,6 +1,6 @@
 package model.dto;
 
-import model.Amount;
+import model.util.Amount;
 
 /**
  * This class represents the items original price and its VAT rate.

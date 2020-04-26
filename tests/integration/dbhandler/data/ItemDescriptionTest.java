@@ -1,4 +1,4 @@
-package integration;
+package integration.dbhandler.data;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -8,10 +8,10 @@ import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import integration.ItemDescription;
-import model.Amount;
-import model.IdentificationNumber;
+import integration.dbhandler.data.ItemDescription;
 import model.dto.ItemPrice;
+import model.util.Amount;
+import model.util.IdentificationNumber;
 
 class ItemDescriptionTest {
 	private ItemDescription description;

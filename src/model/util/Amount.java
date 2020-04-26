@@ -1,4 +1,4 @@
-package model;
+package model.util;
 
 /**
  * Represents an amount of any kind. For example an item price or a VAT rate.

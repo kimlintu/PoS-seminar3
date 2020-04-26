@@ -1,4 +1,4 @@
-package model;
+package model.pos;
 
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
@@ -11,11 +11,15 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import controller.Controller;
-import integration.ItemDescription;
 import integration.dbhandler.SystemCreator;
+import integration.dbhandler.data.ItemDescription;
 import model.dto.ItemInformation;
 import model.dto.ItemPrice;
 import model.dto.SaleInformation;
+import model.pos.Item;
+import model.pos.Sale;
+import model.util.Amount;
+import model.util.IdentificationNumber;
 
 class SaleTest {
 	SystemCreator creator;

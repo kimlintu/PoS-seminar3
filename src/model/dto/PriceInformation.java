@@ -1,6 +1,6 @@
 package model.dto;
 
-import model.Amount;
+import model.util.Amount;
 
 /**
  * This is a data container for the total price and the total VAT tax for the current sale.

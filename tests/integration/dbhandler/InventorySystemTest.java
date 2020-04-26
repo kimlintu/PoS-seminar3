@@ -10,12 +10,12 @@ import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import integration.ItemDescription;
-import model.Amount;
-import model.IdentificationNumber;
-import model.Sale;
+import integration.dbhandler.data.ItemDescription;
 import model.dto.ItemPrice;
 import model.dto.SaleInformation;
+import model.pos.Sale;
+import model.util.Amount;
+import model.util.IdentificationNumber;
 
 class InventorySystemTest {
 	private InventorySystem inventory;

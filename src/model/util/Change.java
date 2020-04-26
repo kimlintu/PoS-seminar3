@@ -1,4 +1,4 @@
-package model;
+package model.util;
 
 public class Change {
 	private final Amount amountPaid;

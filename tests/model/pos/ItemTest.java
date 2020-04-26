@@ -1,4 +1,4 @@
-package model;
+package model.pos;
 
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
@@ -9,9 +9,12 @@ import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import integration.ItemDescription;
+import integration.dbhandler.data.ItemDescription;
 import model.dto.ItemInformation;
 import model.dto.ItemPrice;
+import model.pos.Item;
+import model.util.Amount;
+import model.util.IdentificationNumber;
 
 class ItemTest {
 	private Item item;

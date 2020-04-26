@@ -1,8 +1,9 @@
-package model;
+package model.pos;
 
-import integration.ItemDescription;
+import integration.dbhandler.data.ItemDescription;
 import model.dto.ItemInformation;
 import model.dto.ItemPrice;
+import model.util.Amount;
 
 /**
  * This class represents an unique item that's being processed in the sale. This means

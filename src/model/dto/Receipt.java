@@ -1,6 +1,6 @@
 package model.dto;
 
-import model.Amount;
+import model.util.Amount;
 
 public class Receipt {
 	private final SaleInformation saleInfo;

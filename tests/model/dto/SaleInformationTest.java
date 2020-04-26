@@ -1,4 +1,4 @@
-package model;
+package model.dto;
 
 import static org.junit.jupiter.api.Assertions.fail;
 
@@ -8,12 +8,12 @@ import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import integration.ItemDescription;
-import model.Amount;
-import model.IdentificationNumber;
-import model.Sale;
+import integration.dbhandler.data.ItemDescription;
 import model.dto.ItemPrice;
 import model.dto.SaleInformation;
+import model.pos.Sale;
+import model.util.Amount;
+import model.util.IdentificationNumber;
 
 class SaleInformationTest {
 	private Sale sale;

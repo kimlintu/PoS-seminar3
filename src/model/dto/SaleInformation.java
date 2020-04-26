@@ -4,7 +4,7 @@ import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.List;
 
-import model.Item;
+import model.pos.Item;
 
 /**
  * A data container for all the available information about the sale, such as time of sale,

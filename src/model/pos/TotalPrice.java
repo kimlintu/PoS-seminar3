@@ -1,7 +1,8 @@
-package model;
+package model.pos;
 
 import model.dto.ItemInformation;
 import model.dto.PriceInformation;
+import model.util.Amount;
 
 /**
  * Represents the total price of the ongoing sale. 

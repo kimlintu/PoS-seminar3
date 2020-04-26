@@ -1,7 +1,7 @@
 package model.dto;
 
-import integration.ItemDescription;
-import model.Amount;
+import integration.dbhandler.data.ItemDescription;
+import model.util.Amount;
 
 /**
  * This is a data container containing information about an unique item

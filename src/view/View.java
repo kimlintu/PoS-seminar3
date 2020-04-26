@@ -1,7 +1,7 @@
 package view;
 
 import controller.Controller;
-import model.IdentificationNumber;
+import model.util.IdentificationNumber;
 
 public class View {
 	private Controller controller; 

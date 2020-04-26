@@ -1,17 +1,17 @@
 package controller;
 
-import integration.ItemDescription;
 import integration.cashregister.CashRegister;
 import integration.dbhandler.AccountingSystem;
 import integration.dbhandler.DiscountSystem;
 import integration.dbhandler.InventorySystem;
 import integration.dbhandler.SaleLog;
 import integration.dbhandler.SystemCreator;
+import integration.dbhandler.data.ItemDescription;
 import integration.printer.Printer;
-import model.IdentificationNumber;
-import model.Sale;
 import model.dto.PriceInformation;
 import model.dto.SaleInformation;
+import model.pos.Sale;
+import model.util.IdentificationNumber;
 
 /**
  * Handles all the system operations in the program. 

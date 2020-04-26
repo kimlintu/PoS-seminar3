@@ -3,12 +3,13 @@ package integration.dbhandler;
 import java.util.ArrayList;
 import java.util.List;
 
-import integration.ItemDescription;
-import model.Amount;
-import model.IdentificationNumber;
+import integration.dbhandler.data.ItemData;
+import integration.dbhandler.data.ItemDescription;
 import model.dto.ItemInformation;
 import model.dto.ItemPrice;
 import model.dto.SaleInformation;
+import model.util.Amount;
+import model.util.IdentificationNumber;
 
 public class InventorySystem {
 	private List<ItemData> itemDB;

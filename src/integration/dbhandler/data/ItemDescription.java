@@ -1,8 +1,8 @@
-package integration;
+package integration.dbhandler.data;
 
 import integration.dbhandler.InventorySystem;
-import model.IdentificationNumber;
 import model.dto.ItemPrice;
+import model.util.IdentificationNumber;
 
 /**
  * This class is a data container that contains information pertaining to an item, including its

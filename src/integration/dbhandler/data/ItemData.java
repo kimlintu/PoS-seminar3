@@ -1,6 +1,4 @@
-package integration.dbhandler;
-
-import integration.ItemDescription;
+package integration.dbhandler.data;
 
 /**
  * This class represents a item data object in the "database". It contains the description
