@@ -37,21 +37,21 @@ public class Sale {
 	 * @param purchasedQuantity Amount of the corresponding item being processed.
 	 */
 	public void addItemToSale(ItemDescription itemDescription, int purchasedQuantity) {
-		Item item = new Item(itemDescription, purchasedQuantity);
+		Item purchasedItem = new Item(itemDescription, purchasedQuantity);
 		
-		if(itemList.contains(item)) {
-			updateQuantityOfItemInItemList(item, purchasedQuantity);
-			updatePriceOfItemInItemList(item, purchasedQuantity);
+		if(itemList.contains(purchasedItem)) {
+			updateQuantityOfItemInItemList(purchasedItem, purchasedQuantity);
+			updatePriceOfItemInItemList(purchasedItem, purchasedQuantity);
 		} else {
-			addItemToItemList(item);
+			addItemToItemList(purchasedItem);
 		}
 		
-		totalPrice.addToTotalPrice(item);
+		totalPrice.addToTotalPrice(purchasedItem);
 	}
 	
 	/**
 	 * Returns a new {@link SaleInformation} object created by this instance.
-	 * @return A {@link SaleInformation} object containing data from this <code>Sale</code>.
+	 * @return A <code>SaleInformation</code> object containing data from this <code>Sale</code>.
 	 */
 	public SaleInformation getSaleInformation() {
 		return new SaleInformation(timeOfSale, totalPrice.getPriceInfo(), itemList);
@@ -62,7 +62,7 @@ public class Sale {
 	}
 	
 	private void updatePriceOfItemInItemList(Item item, int quantity) {
-		getItemFromItemList(item).updatePrice(quantity);
+		getItemFromItemList(item).increasePrice(quantity);
 	}
 	
 	private Item getItemFromItemList(Item item) {

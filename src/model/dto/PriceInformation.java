@@ -7,7 +7,7 @@ import model.Amount;
  * @author kim
  *
  */
-public class PriceInfo {
+public class PriceInformation {
 	private Amount totalPrice;
 	private Amount totalVat;
 	
@@ -16,7 +16,7 @@ public class PriceInfo {
 	 * @param totalPrice The total price of the sale.
 	 * @param totalVat The total VAT tax of the sale.
 	 */
-	public PriceInfo(Amount totalPrice, Amount totalVat) {
+	public PriceInformation(Amount totalPrice, Amount totalVat) {
 		this.totalPrice = totalPrice;
 		this.totalVat = totalVat;
 	}

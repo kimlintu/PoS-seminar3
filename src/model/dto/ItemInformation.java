@@ -12,6 +12,7 @@ import model.Amount;
 public class ItemInformation {
 	private final ItemDescription description;
 	private final Amount price;
+	private final Amount vatTax;
 	private final int quantity;
 	
 	/**
@@ -21,9 +22,10 @@ public class ItemInformation {
 	 * @param price The price (including VAT tax) of the item.
 	 * @param quantity The current quantity of the item being processed.
 	 */
-	public ItemInformation(ItemDescription description, Amount price, int quantity) {
+	public ItemInformation(ItemDescription description, Amount price, Amount vatTax, int quantity) {
 		this.description = description;
 		this.price = price;
+		this.vatTax = vatTax;
 		this.quantity = quantity;
 	}
 	
@@ -42,6 +44,14 @@ public class ItemInformation {
 	 */
 	public Amount getPrice() {
 		return price;
+	}
+	
+	/**
+	 * Returns the total VAT tax of the item.
+	 * @return The tax as an <code>Amount</code> object.
+	 */
+	public Amount getVatTax() {
+		return vatTax;
 	}
 	
 	/**

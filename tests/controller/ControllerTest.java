@@ -13,7 +13,7 @@ import integration.dbhandler.SystemCreator;
 import model.Amount;
 import model.IdentificationNumber;
 import model.dto.ItemPrice;
-import model.dto.PriceInfo;
+import model.dto.PriceInformation;
 
 class ControllerTest {
 	private Controller controller;
@@ -61,7 +61,7 @@ class ControllerTest {
 		Amount expectedTotalPrice = new Amount((5 + (5 * 0.1)) * 3);
 		Amount expectedTotalVat = new Amount((5 * 0.1) * 3);
 
-		PriceInfo priceInfo = controller.endSale();
+		PriceInformation priceInfo = controller.endSale();
 		Amount receivedTotalPrice = priceInfo.getTotalPrice();
 		Amount receivedTotalVat = priceInfo.getTotalVat();
 

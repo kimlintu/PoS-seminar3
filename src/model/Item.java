@@ -5,8 +5,8 @@ import model.dto.ItemInformation;
 import model.dto.ItemPrice;
 
 /**
- * This class represents an unique item that's being processed in the sale. That means 
- * that multiple identical items are represented by one single object.
+ * This class represents an unique item that's being processed in the sale. This means
+ * that its price and quantity is mutable.
  * @author kim
  *
  */
@@ -14,7 +14,8 @@ import model.dto.ItemPrice;
 public class Item {
 	private ItemDescription description;
 	private int quantity;
-	private Amount price;
+	private Amount accumulatedPrice;
+	private Amount accumulatedVatTax;
 
 	/**
 	 * Constructs a new <code>Item</code> and initializes its description and
@@ -28,7 +29,8 @@ public class Item {
 		this.description = description;
 		this.quantity = quantity;
 		
-		price = calculateItemPrice(description.getPriceInfo());
+		accumulatedPrice = calculateItemPrice(description.getPriceInfo());
+		accumulatedVatTax = calculateVatTax(description.getPriceInfo());
 	}
 	
 	/**
@@ -37,24 +39,38 @@ public class Item {
 	 * @return An {@link ItemInformation} object.
 	 */
 	public ItemInformation getItemInformation() {
-		return new ItemInformation(description, price, quantity);
+		return new ItemInformation(description, accumulatedPrice, accumulatedVatTax, quantity);
 	}
 	
+	/**
+	 * Increase the quantity of this item
+	 * that's being purchased.
+	 * @param quantityToAdd How much to increase the quantity.
+	 */
 	void addToQuantity(int quantityToAdd) {
 		quantity += quantityToAdd;
 	}
 	
-	void updatePrice(int quantity) {
-		price = price.add(price.multiply(quantity));
+	/**
+	 * Increase the total cost of the item(s). 
+	 * @param quantity How many more of this item that has been purchased.
+	 */
+	void increasePrice(int quantity) {
+		accumulatedPrice = accumulatedPrice.add(accumulatedPrice.multiply(quantity));
 	}
 	
 	private Amount calculateItemPrice(ItemPrice priceInfo) {
-		Amount itemPriceAmount = priceInfo.getPriceAmount();
+		Amount itemPriceWithoutVat = priceInfo.getPriceAmount();
+		Amount itemVatTax = calculateVatTax(priceInfo);
+		
+		return new Amount(itemPriceWithoutVat.add(itemVatTax).getValue());
+	}
+	
+	private Amount calculateVatTax(ItemPrice priceInfo) {
+		Amount itemPriceWithoutVat = priceInfo.getPriceAmount();
 		Amount itemVatRate = priceInfo.getVatRate();
 		
-		Amount itemVatTax = itemPriceAmount.multiply(itemVatRate);
-		
-		return new Amount(itemPriceAmount.add(itemVatTax).getValue());
+		return itemPriceWithoutVat.multiply(itemVatRate);
 	}
 	
 	/**

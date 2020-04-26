@@ -14,7 +14,7 @@ import model.Item;
  */
 public class SaleInformation {
 	private final LocalTime time;
-	private final PriceInfo priceInfo;
+	private final PriceInformation priceInfo;
 	private final List<ItemInformation> itemList;
 	
 	/**
@@ -26,7 +26,7 @@ public class SaleInformation {
 	 * @param totalPrice An <code>Amount</code>
 	 * @param itemList
 	 */
-	public SaleInformation(LocalTime time, PriceInfo priceInfo, List<Item> itemList) {
+	public SaleInformation(LocalTime time, PriceInformation priceInfo, List<Item> itemList) {
 		this.time = time;
 		this.priceInfo = priceInfo;
 		
@@ -36,10 +36,10 @@ public class SaleInformation {
 
 	/**
 	 * Returns an object that contains the total price and the total VAT tax of the sale.
-	 * @return An {@link PriceInfo} object that can be called to retrieve the total price 
+	 * @return An {@link PriceInformation} object that can be called to retrieve the total price 
 	 * and total VAT tax.
 	 */
-	public PriceInfo getPriceInfo() {
+	public PriceInformation getPriceInfo() {
 		return priceInfo;
 	}
 	

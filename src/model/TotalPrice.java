@@ -1,7 +1,7 @@
 package model;
 
 import model.dto.ItemInformation;
-import model.dto.PriceInfo;
+import model.dto.PriceInformation;
 
 /**
  * Represents the total price of the ongoing sale. 
@@ -20,24 +20,23 @@ public class TotalPrice {
 		totalVatAmount = new Amount(0);
 	}
 	
-	PriceInfo getPriceInfo() {
-		return new PriceInfo(totalPriceAmount, totalVatAmount);
+	PriceInformation getPriceInfo() {
+		return new PriceInformation(totalPriceAmount, totalVatAmount);
 	}
 	
 	/**
 	 * Increments the total price of the sale by the price of an item
-	 * times the quantity of the item. 
+	 * times the quantity of the item. Also adds the items VAT tax to
+	 * the total.
 	 * @param item Item whose price is getting added to the total. 
 	 */
 	void addToTotalPrice(Item item) {
 		ItemInformation itemInfo = item.getItemInformation();
+		Amount itemPrice = itemInfo.getPrice();
 		
-		totalPriceAmount = totalPriceAmount.add(itemInfo.getPrice().multiply(itemInfo.getQuantity()));
+		totalPriceAmount = totalPriceAmount.add(itemPrice.multiply(itemInfo.getQuantity()));
 		
-		Amount itemPriceNoVat = itemInfo.getItemDescription().getPriceInfo().getPriceAmount();
-		Amount itemVatRate = itemInfo.getItemDescription().getPriceInfo().getVatRate();
-		
-		addToTotalVat(new Amount(((itemPriceNoVat.multiply(itemVatRate)).multiply(itemInfo.getQuantity())).getValue()));
+		addToTotalVat(itemInfo.getVatTax().multiply(itemInfo.getQuantity()));
 	}
 	
 	private void addToTotalVat(Amount itemVatAmount) {

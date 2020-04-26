@@ -10,7 +10,7 @@ import integration.dbhandler.SystemCreator;
 import integration.printer.Printer;
 import model.IdentificationNumber;
 import model.Sale;
-import model.dto.PriceInfo;
+import model.dto.PriceInformation;
 import model.dto.SaleInformation;
 
 /**
@@ -54,7 +54,7 @@ public class Controller {
 		currentSale = new Sale();
 	}
 	
-	public PriceInfo endSale() {
+	public PriceInformation endSale() {
 		saleInfo = currentSale.getSaleInformation();
 		
 		return saleInfo.getPriceInfo();

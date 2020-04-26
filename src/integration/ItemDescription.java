@@ -6,7 +6,7 @@ import model.dto.ItemPrice;
 
 /**
  * This class is a data container that contains information pertaining to an item, including its
- * name, price info contained in {@link PriceInfo} and its unique id.
+ * name, price info contained in {@link PriceInformation} and its unique id.
  * @author kim
  *
  */
