@@ -13,7 +13,6 @@ import model.pos.Item;
  *
  */
 public class SaleInformation {
-	private final LocalTime time;
 	private final PriceInformation priceInfo;
 	private final List<ItemInformation> itemList;
 	
@@ -26,8 +25,7 @@ public class SaleInformation {
 	 * @param totalPrice An <code>Amount</code>
 	 * @param itemList
 	 */
-	public SaleInformation(LocalTime time, PriceInformation priceInfo, List<Item> itemList) {
-		this.time = time;
+	public SaleInformation(PriceInformation priceInfo, List<Item> itemList) {
 		this.priceInfo = priceInfo;
 		
 		this.itemList = new ArrayList<>(); 
@@ -43,14 +41,7 @@ public class SaleInformation {
 		return priceInfo;
 	}
 	
-	/**
-	 * Returns the time that the sale was started.
-	 * 
-	 * @return Time of the sale as a <code>LocalTime</code> object.
-	 */
-	public LocalTime getTimeOfSale() {
-		return time;
-	}
+	
 
 	/**
 	 * Returns a <code>List</code> of every item that was sold.
@@ -81,8 +72,8 @@ public class SaleInformation {
 		}
 
 		sb.append("\n");
-		sb.append(String.format("Total price: %-10.2fTotal Vat: %-10.2fTime: %s", priceInfo.getTotalPrice().getValue(),
-				priceInfo.getTotalVat().getValue(), time.toString()));
+		sb.append(String.format("Total price: %-10.2fTotal Vat: %-10.2f", priceInfo.getTotalPrice().getValue(),
+				priceInfo.getTotalVat().getValue()));
 
 		return sb.toString();
 	}

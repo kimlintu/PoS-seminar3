@@ -6,7 +6,9 @@ import java.util.List;
 
 import integration.dbhandler.InventorySystem;
 import integration.dbhandler.data.ItemDescription;
+import model.dto.Receipt;
 import model.dto.SaleInformation;
+import model.util.Amount;
 
 /**
  * This class represents the ongoing sale.
@@ -17,7 +19,6 @@ import model.dto.SaleInformation;
 public class Sale {
 	private List<Item> itemList;
 	private TotalPrice totalPrice;
-	private LocalTime timeOfSale;
 
 	/**
 	 * Creates a new instance. The instance will have a list that contains the items
@@ -26,7 +27,6 @@ public class Sale {
 	public Sale() {
 		itemList = new ArrayList<>();
 		totalPrice = new TotalPrice();
-		timeOfSale = LocalTime.now();
 	}
 
 	/**
@@ -59,7 +59,13 @@ public class Sale {
 	 *         <code>Sale</code>.
 	 */
 	public SaleInformation getSaleInformation() {
-		return new SaleInformation(timeOfSale, totalPrice.getPriceInfo(), itemList);
+		return new SaleInformation(totalPrice.getPriceInfo(), itemList);
+	}
+	
+	public Receipt processSale(SaleInformation saleInfo, Amount amountPaid, Amount amountOfChange) {
+		Receipt receipt = new Receipt(saleInfo, amountPaid, amountOfChange, LocalTime.now());
+		
+		return receipt;
 	}
 
 	private void updateQuantityOfItemInItemList(Item item, int quantity) {
