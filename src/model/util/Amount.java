@@ -20,7 +20,7 @@ public class Amount {
 	
 	/**
 	 * Adds together two <code>Amount</code> values.
-	 * @param amountToAdd The other amount to add.
+	 * @param amountToAdd The other amount to add, should be greater than 0.
 	 * @return A new <code>Amount</code> with the resulting sum as its value.
 	 */
 	public Amount add(Amount amountToAdd) {
@@ -28,9 +28,9 @@ public class Amount {
 	}
 	
 	/**
-	 * Adds together two <code>Amount</code> values.
-	 * @param amountToAdd The other amount to add.
-	 * @return A new <code>Amount</code> with the resulting sum as its value.
+	 * Subtracts one <code>Amount</code> from another <code>Amount</code>.
+	 * @param amountToAdd The other amount to subtract, should be greater than 0.
+	 * @return A new <code>Amount</code> with the resulting difference as its value.
 	 */
 	public Amount subtract(Amount amountToSubtract) {
 		return new Amount(this.getValue() - amountToSubtract.getValue());

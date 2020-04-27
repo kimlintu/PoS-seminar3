@@ -1,5 +1,10 @@
 package integration.printer;
 
-public class Printer {
+import model.dto.Receipt;
 
+public class Printer {
+	
+	public void printReceipt(Receipt receipt) {
+		
+	}
 }

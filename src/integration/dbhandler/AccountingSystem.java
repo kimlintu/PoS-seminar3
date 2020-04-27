@@ -1,6 +1,6 @@
 package integration.dbhandler;
 
-import model.dto.SaleInformation;
+import model.dto.Receipt;
 
 public class AccountingSystem {
 	
@@ -8,6 +8,6 @@ public class AccountingSystem {
 		
 	}
 	
-	public void updateAccounting(SaleInformation saleInfo) {
+	public void updateAccounting(Receipt completedSaleInformation) {
 	}
 }

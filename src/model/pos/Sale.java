@@ -6,6 +6,7 @@ import java.util.List;
 
 import integration.dbhandler.InventorySystem;
 import integration.dbhandler.data.ItemDescription;
+import integration.printer.Printer;
 import model.dto.Receipt;
 import model.dto.SaleInformation;
 import model.util.Amount;
@@ -63,9 +64,14 @@ public class Sale {
 	}
 	
 	public Receipt processSale(SaleInformation saleInfo, Amount amountPaid, Amount amountOfChange) {
-		Receipt receipt = new Receipt(saleInfo, amountPaid, amountOfChange, LocalTime.now());
+		LocalTime timeOfSale = LocalTime.now();
+		Receipt receipt = new Receipt(saleInfo, amountPaid, amountOfChange, timeOfSale);
 		
 		return receipt;
+	}
+	
+	public void printReceipt(Printer printer, Receipt receipt) {
+		printer.printReceipt(receipt);
 	}
 
 	private void updateQuantityOfItemInItemList(Item item, int quantity) {

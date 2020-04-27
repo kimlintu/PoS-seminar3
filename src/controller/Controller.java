@@ -9,8 +9,11 @@ import integration.dbhandler.SystemCreator;
 import integration.dbhandler.data.ItemDescription;
 import integration.printer.Printer;
 import model.dto.PriceInformation;
+import model.dto.Receipt;
 import model.dto.SaleInformation;
 import model.pos.Sale;
+import model.util.Amount;
+import model.util.Change;
 import model.util.IdentificationNumber;
 
 /**
@@ -54,6 +57,11 @@ public class Controller {
 		currentSale = new Sale();
 	}
 	
+	/**
+	 * Signals the program that all items have been scanned. 
+	 * @return An {@link SaleInformation} object containing information 
+	 * pertaining to the sale. 
+	 */
 	public PriceInformation endSale() {
 		saleInfo = currentSale.getSaleInformation();
 		
@@ -74,5 +82,27 @@ public class Controller {
 		currentSale.addItemToSale(itemDescription, quantity);
 		
 		return itemDescription;
+	}
+	
+	public Amount enterAmountPaid(Amount amountPaid) {
+		Change change = new Change();
+		
+		Amount totalPrice = saleInfo.getPriceInfo().getTotalPrice();
+		Amount amountOfChange = change.calculateChange(totalPrice, amountPaid); 
+		
+		cashRegister.depositAmountToRegister(amountPaid);
+		if(amountOfChange.getValue() > 0) {
+			cashRegister.withdrawAmountFromRegister(amountOfChange);
+		}
+		
+		Receipt receipt = currentSale.processSale(saleInfo, amountPaid, amountOfChange);
+		
+		accountingSystem.updateAccounting(receipt);
+		inventorySystem.updateQuantityOfSoldItems(saleInfo);
+		saleLog.logSale(receipt);
+		
+		currentSale.printReceipt(printer, receipt);
+		
+		return amountOfChange;
 	}
 }

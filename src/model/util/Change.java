@@ -1,15 +1,7 @@
 package model.util;
 
 public class Change {
-	private final Amount amountPaid;
-	private final Amount totalPrice;
-	
-	public Change(Amount amountPaid, Amount totalPrice) {
-		this.amountPaid = amountPaid;
-		this.totalPrice = totalPrice;
-	}
-	
-	public Amount calculateChange() {
+	public Amount calculateChange(Amount totalPrice, Amount amountPaid) {
 		return totalPrice.subtract(amountPaid);
 	}
 }
