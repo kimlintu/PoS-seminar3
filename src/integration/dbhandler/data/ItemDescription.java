@@ -71,8 +71,4 @@ public class ItemDescription {
 		
 		return false;
 	}
-	
-	public String toString() {
-		return "[name: " + name + ", price: " + priceInfo.getPriceAmount() + ", VAT: " + priceInfo.getVatRate() + ", ID: " + id.getID() + "]";
-	}
 }

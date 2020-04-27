@@ -7,6 +7,7 @@ import java.util.List;
 import integration.dbhandler.InventorySystem;
 import integration.dbhandler.data.ItemDescription;
 import integration.printer.Printer;
+import model.dto.PurchasedItemInformation;
 import model.dto.Receipt;
 import model.dto.SaleInformation;
 import model.util.Amount;
@@ -44,8 +45,10 @@ public class Sale {
 		Item purchasedItem = new Item(itemDescription, purchasedQuantity);
 
 		if (itemList.contains(purchasedItem)) {
-			updateQuantityOfItemInItemList(purchasedItem, purchasedQuantity);
-			updatePriceOfItemInItemList(purchasedItem, purchasedQuantity);
+			Item itemInList = getItemFromItemList(purchasedItem);
+			PurchasedItemInformation itemInfo = itemInList.getItemInformation();
+			updateQuantityOfItemInItemList(itemInList, purchasedQuantity);
+			updatePriceOfItemInItemList(itemInList, purchasedQuantity);
 		} else {
 			addItemToItemList(purchasedItem);
 		}
@@ -62,24 +65,39 @@ public class Sale {
 	public SaleInformation getSaleInformation() {
 		return new SaleInformation(totalPrice.getPriceInfo(), itemList);
 	}
-	
+
+	/**
+	 * Complete the sale and create a receipt.
+	 * 
+	 * @param saleInfo       The information about the sale specified by
+	 *                       {@link SaleInformation}.
+	 * @param amountPaid     The amount paid by the customer.
+	 * @param amountOfChange The amount of change that the customer should receive.
+	 * @return
+	 */
 	public Receipt processSale(SaleInformation saleInfo, Amount amountPaid, Amount amountOfChange) {
 		LocalTime timeOfSale = LocalTime.now();
 		Receipt receipt = new Receipt(saleInfo, amountPaid, amountOfChange, timeOfSale);
-		
+
 		return receipt;
 	}
-	
+
+	/**
+	 * Print the receipt for the sale.
+	 * 
+	 * @param printer The printer that will print out the receipt.
+	 * @param receipt The receipt that should be printed.
+	 */
 	public void printReceipt(Printer printer, Receipt receipt) {
 		printer.printReceipt(receipt);
 	}
 
 	private void updateQuantityOfItemInItemList(Item item, int quantity) {
-		getItemFromItemList(item).addToQuantity(quantity);
+		item.addToQuantity(quantity);
 	}
 
 	private void updatePriceOfItemInItemList(Item item, int quantity) {
-		getItemFromItemList(item).increasePrice(quantity);
+		item.increaseAccumulatedPrice(quantity);
 	}
 
 	private Item getItemFromItemList(Item item) {

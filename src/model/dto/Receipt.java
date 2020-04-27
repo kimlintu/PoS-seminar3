@@ -1,6 +1,7 @@
 package model.dto;
 
 import java.time.LocalTime;
+import java.util.List;
 
 import model.util.Amount;
 
@@ -26,7 +27,7 @@ public class Receipt {
 		this.changeAmount = changeAmount;
 		this.timeOfSale = timeOfSale;
 		
-		this.store = new Store("STORE NAME", "STORE ADDRESS");
+		this.store = new Store("Real Store", "Real Street 123");
 	}
 	
 	/**
@@ -69,5 +70,23 @@ public class Receipt {
 	 */
 	public Store getStore() {
 		return store;
+	}
+	
+	public String toString() {
+		StringBuilder sb = new StringBuilder();
+		
+		List<PurchasedItemInformation> itemList = saleInfo.getListOfSoldItems();
+		
+		sb.append("-----------------Receipt-----------------\n");
+		sb.append(String.format("%-15s %-15s %s", "name", "qty*price", "total") + "\n\n");
+		for(PurchasedItemInformation productInfo : itemList) {
+			sb.append(productInfo.toString() + "\n");
+		}
+		sb.append("\n-----------------------------------------\n");
+		sb.append(String.format("%s %25s\n", "TOTAL: " + saleInfo.getPriceInfo().getTotalPrice(), "VAT tax: " + saleInfo.getPriceInfo().getTotalVat()));
+		sb.append("-----------------------------------------\n");
+		sb.append(String.format("\n%30s\n\n", "Thank you, come again!"));
+		sb.append(String.format("%27s \n%30s\n", "Store: " + store.getName(), "Address: " + store.getAddress()));
+		return sb.toString();
 	}
 }

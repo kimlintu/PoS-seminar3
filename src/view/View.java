@@ -1,6 +1,9 @@
 package view;
 
 import controller.Controller;
+import model.dto.PriceInformation;
+import model.dto.SaleInformation;
+import model.util.Amount;
 import model.util.IdentificationNumber;
 
 public class View {
@@ -14,15 +17,36 @@ public class View {
 		controller.startSale();
 	}
 	
-	public void endSale() {
-		controller.endSale();
+	public PriceInformation endSale() {
+		return controller.endSale();
 	}
 	
-	public void enterItemIdentifier(IdentificationNumber itemID, int quantity, boolean multipleItems) {
+	public SaleInformation enterItemIdentifier(IdentificationNumber itemID, int quantity, boolean multipleItems) {
 		if(!multipleItems) {
-			controller.processItem(itemID, 1);
+			return controller.processItem(itemID, 1);
 		}
 
-		controller.processItem(itemID, quantity);
+		return controller.processItem(itemID, quantity);
 	}
+	
+	public void testRun() {
+		startSale();
+		
+		enterItemIdentifier(new IdentificationNumber(123), 4, true);
+		enterItemIdentifier(new IdentificationNumber(666), 10, true);
+		enterItemIdentifier(new IdentificationNumber(123), 1, false);
+		enterItemIdentifier(new IdentificationNumber(492), 1, false);
+
+
+		PriceInformation priceInfo = endSale();
+		endSale();
+		processSale();
+		
+	}
+	
+	private void processSale() {
+		controller.enterAmountPaid(new Amount(5000));
+		
+	}
+	
 }

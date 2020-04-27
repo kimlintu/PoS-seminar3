@@ -19,4 +19,8 @@ public class CashRegister {
 		
 		return balance;
 	}
+	
+	public Amount getBalance() {
+		return balance;
+	}
 }

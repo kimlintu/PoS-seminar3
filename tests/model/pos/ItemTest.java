@@ -10,7 +10,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import integration.dbhandler.data.ItemDescription;
-import model.dto.ItemInformation;
+import model.dto.PurchasedItemInformation;
 import model.dto.ItemPrice;
 import model.pos.Item;
 import model.util.Amount;
@@ -43,9 +43,9 @@ class ItemTest {
 		double calculatedPrice = 5 + (0.1 * 5);
 		Amount finalPrice = new Amount(calculatedPrice);
 
-		ItemInformation itemInfo = item.getItemInformation();
-		assertTrue(itemInfo.getPrice().equals(finalPrice),
-				"Calculated price " + itemInfo.getPrice() + " is not correct. Should be " + calculatedPrice);
+		PurchasedItemInformation itemInfo = item.getItemInformation();
+		assertTrue(itemInfo.getAccumulatedPrice().equals(finalPrice),
+				"Calculated price " + itemInfo.getAccumulatedPrice() + " is not correct. Should be " + calculatedPrice);
 
 	}
 

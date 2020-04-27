@@ -1,6 +1,5 @@
 package model.dto;
 
-import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -14,7 +13,7 @@ import model.pos.Item;
  */
 public class SaleInformation {
 	private final PriceInformation priceInfo;
-	private final List<ItemInformation> itemList;
+	private final List<PurchasedItemInformation> itemList;
 	
 	/**
 	 * Constructs an object that contains the information about the current state of
@@ -48,33 +47,15 @@ public class SaleInformation {
 	 * 
 	 * @return A <code>List</code> of {@link Item} objects.
 	 */
-	public List<ItemInformation> getListOfSoldItems() {
+	public List<PurchasedItemInformation> getListOfSoldItems() {
 		return itemList;
 	}
 	
-	private List<ItemInformation> createImmutableItemList(List<Item> itemList) {
+	private List<PurchasedItemInformation> createImmutableItemList(List<Item> itemList) {
 		for(Item i : itemList) {
 			this.itemList.add(i.getItemInformation());
 		}
 		
 		return this.itemList;
-	}
-
-	/**
-	 * The string representation of this instance. Shows the name, price and
-	 * quantity of every sold item. Also displays the total price, total VAT tax and
-	 * the time when the sale was started.
-	 */
-	public String toString() {
-		StringBuilder sb = new StringBuilder();
-		for (ItemInformation i : itemList) {
-			sb.append(i.toString() + "\n");
-		}
-
-		sb.append("\n");
-		sb.append(String.format("Total price: %-10.2fTotal Vat: %-10.2f", priceInfo.getTotalPrice().getValue(),
-				priceInfo.getTotalVat().getValue()));
-
-		return sb.toString();
 	}
 }

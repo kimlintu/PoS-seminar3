@@ -38,7 +38,8 @@ public class Controller {
 	 * {@link InventorySystem}, {@link DiscountSystem}, {@link AccountingSystem}, {@link SaleLog}
 	 * and {@link Printer}
 	 * 
-	 * @param creator A {@link SystemCreator} object.
+	 * @param creator A {@link SystemCreator} object that has references to all the 
+	 * external systems.
 	 */
 	public Controller(SystemCreator creator) {
 		inventorySystem = creator.getInventorySystem();
@@ -51,7 +52,7 @@ public class Controller {
 	}
 	
 	/**
-	 * Gives a reference to a new Sale object to <code>currentSale</code> in this {@link Controller}
+	 * Gives a reference to a new Sale object to <code>currentSale</code> in this <code>Controller</code>
 	 */
 	public void startSale() {
 		currentSale = new Sale();
@@ -59,8 +60,8 @@ public class Controller {
 	
 	/**
 	 * Signals the program that all items have been scanned. 
-	 * @return An {@link SaleInformation} object containing information 
-	 * pertaining to the sale. 
+	 * @return Returns information about the total price, including
+	 * total VAT tax.
 	 */
 	public PriceInformation endSale() {
 		saleInfo = currentSale.getSaleInformation();
@@ -77,32 +78,45 @@ public class Controller {
 	 * @return An {@link ItemDescription} that gets retrieved from the {@link InventorySystem} using the 
 	 * specified <code>itemID</code>
 	 */
-	public ItemDescription processItem(IdentificationNumber itemID, int quantity) {
+	public SaleInformation processItem(IdentificationNumber itemID, int quantity) {
 		ItemDescription itemDescription = inventorySystem.getItemDescriptionFromDatabase(itemID);
 		currentSale.addItemToSale(itemDescription, quantity);
 		
-		return itemDescription;
+		return currentSale.getSaleInformation();
 	}
 	
+	/**
+	 * Processes the sale by updating the balance in the register, creating 
+	 * a receipt and sending the sale information to the relevant external systems. 
+	 * Finally, it prints the receipt and returns the amount of change to 
+	 * give to the customer.
+	 * @param amountPaid The amount paid by the customer.
+	 * @return The amount of change to be received by the customer.
+	 */
 	public Amount enterAmountPaid(Amount amountPaid) {
-		Change change = new Change();
-		
 		Amount totalPrice = saleInfo.getPriceInfo().getTotalPrice();
-		Amount amountOfChange = change.calculateChange(totalPrice, amountPaid); 
+		Amount amountOfChange = getChange(totalPrice, amountPaid); 
 		
-		cashRegister.depositAmountToRegister(amountPaid);
-		if(amountOfChange.getValue() > 0) {
-			cashRegister.withdrawAmountFromRegister(amountOfChange);
-		}
+		updateBalanceInCashRegister(totalPrice);
 		
 		Receipt receipt = currentSale.processSale(saleInfo, amountPaid, amountOfChange);
 		
 		accountingSystem.updateAccounting(receipt);
-		inventorySystem.updateQuantityOfSoldItems(saleInfo);
 		saleLog.logSale(receipt);
+		inventorySystem.updateQuantityOfSoldItems(saleInfo);
 		
 		currentSale.printReceipt(printer, receipt);
 		
 		return amountOfChange;
+	}
+	
+	private Amount getChange(Amount totalPrice, Amount amountPaid) {
+		return new Change().calculateChange(totalPrice, amountPaid);
+	}
+	
+	private Amount updateBalanceInCashRegister(Amount totalPrice) {
+		cashRegister.depositAmountToRegister(totalPrice);
+		
+		return cashRegister.getBalance();
 	}
 }

@@ -12,6 +12,6 @@ public class Main {
 		Controller controller = new Controller(creator);
 		View view = new View(controller);
 		
-		view.startSale();
+		view.testRun();
 	}
 }

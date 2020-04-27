@@ -1,11 +1,12 @@
 package model.pos;
 
-import model.dto.ItemInformation;
+import model.dto.PurchasedItemInformation;
 import model.dto.PriceInformation;
 import model.util.Amount;
 
 /**
- * Represents the total price of the ongoing sale. 
+ * Represents the total price of the ongoing sale. Includes the total price including
+ * VAT tax but also the VAT tax as a seperate amount.
  * @author kim
  *
  */
@@ -14,7 +15,8 @@ public class TotalPrice {
 	private Amount totalVatAmount;
 	
 	/**
-	 * Creates a new instance with an initial amount of 0.
+	 * Creates a new instance with total price and total VAT tax
+	 * at an initial amount of 0.
 	 */
 	TotalPrice() {
 		totalPriceAmount = new Amount(0);
@@ -32,12 +34,12 @@ public class TotalPrice {
 	 * @param item Item whose price is getting added to the total. 
 	 */
 	void addToTotalPrice(Item item) {
-		ItemInformation itemInfo = item.getItemInformation();
-		Amount itemPrice = itemInfo.getPrice();
+		PurchasedItemInformation itemInfo = item.getItemInformation();
+		Amount itemPrice = itemInfo.getAccumulatedPrice();
 		
 		totalPriceAmount = totalPriceAmount.add(itemPrice.multiply(itemInfo.getQuantity()));
 		
-		addToTotalVat(itemInfo.getVatTax().multiply(itemInfo.getQuantity()));
+		addToTotalVat(itemInfo.getAccumulatedVatTax().multiply(itemInfo.getQuantity()));
 	}
 	
 	private void addToTotalVat(Amount itemVatAmount) {

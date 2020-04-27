@@ -41,7 +41,7 @@ class ControllerTest {
 		controller = null;
 		existingDescription = null;
 	}
-
+/*
 	@Test
 	void testCorrectItemDescription() {
 		controller.startSale();
@@ -52,7 +52,7 @@ class ControllerTest {
 				"Incorrect item description recieved from inventory. Expected " + existingDescription.toString()
 						+ " got " + retrievedDescription.toString());
 	}
-
+*/
 	@Test
 	void testCorrectPriceInfo() {
 		controller.startSale();

@@ -8,8 +8,8 @@ import model.util.Amount;
  *
  */
 public class PriceInformation {
-	private Amount totalPrice;
-	private Amount totalVat;
+	private final Amount totalPrice;
+	private final Amount totalVat;
 	
 	/**
 	 * Creates an instance and stores the total price and total VAT tax of the sale.

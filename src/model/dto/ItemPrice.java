@@ -3,13 +3,13 @@ package model.dto;
 import model.util.Amount;
 
 /**
- * This class represents the items original price and its VAT rate.
+ * This class contains the items original price and its VAT rate.
  * @author kim
  *
  */
 public class ItemPrice {
-	private Amount priceAmount;
-	private Amount vatRate;
+	private final Amount priceAmount;
+	private final Amount vatRate;
 	
 	/**
 	 * Create an instance that stores the item's price and VAT rate
