@@ -69,7 +69,7 @@ class InventorySystemTest {
 		
 		int expectedQuantityAfterUpdate = quantityBeforeUpdate - 12;
 
-		inventory.updateQuantityOfSoldItems(saleInfo);
+		inventory.updateQuantityOfItems(saleInfo);
 		int quantityAfterUpdate = inventory.getAvailableQuantityOfItem(existingItemID);
 
 		assertEquals(expectedQuantityAfterUpdate, quantityAfterUpdate,

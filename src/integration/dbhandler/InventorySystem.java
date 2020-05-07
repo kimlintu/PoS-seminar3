@@ -11,9 +11,17 @@ import model.dto.SaleInformation;
 import model.util.Amount;
 import model.util.IdentificationNumber;
 
+/**
+ * A class that handles the external inventory system. The database connected
+ * to this is represented by an internal array list.
+ *
+ */
 public class InventorySystem {
 	private List<ItemData> itemDB;
 
+	/**
+	 * Constructs a new object and adds some data entries.
+	 */
 	InventorySystem() {
 		itemDB = new ArrayList<>();
 
@@ -46,11 +54,12 @@ public class InventorySystem {
 	}
 
 	/**
-	 * Updates the quantity of the sold items processed in the sale.
+	 * Updates the quantity of the items in the database that was 
+	 * processed in the sale.
 	 * @param saleInfo The information about the sale. Contains the list 
 	 * of sold items.
 	 */
-	public void updateQuantityOfSoldItems(SaleInformation saleInfo) {
+	public void updateQuantityOfItems(SaleInformation saleInfo) {
 		List<PurchasedItemInformation> itemList = saleInfo.getListOfSoldItems();
 
 		for (PurchasedItemInformation itemInfo : itemList) {

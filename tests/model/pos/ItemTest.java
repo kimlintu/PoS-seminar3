@@ -9,6 +9,8 @@ import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import integration.dbhandler.InventorySystem;
+import integration.dbhandler.SystemCreator;
 import integration.dbhandler.data.ItemDescription;
 import model.dto.PurchasedItemInformation;
 import model.dto.ItemPrice;
@@ -19,6 +21,7 @@ import model.util.IdentificationNumber;
 class ItemTest {
 	private Item item;
 	private ItemDescription description;
+	private SystemCreator creator;
 
 	@BeforeAll
 	static void setUpBeforeClass() throws Exception {
@@ -30,14 +33,16 @@ class ItemTest {
 
 	@BeforeEach
 	void setUp() throws Exception {
-		description = new ItemDescription("apple", new ItemPrice(new Amount(5), new Amount(0.1)), new IdentificationNumber(333));
+		creator = new SystemCreator();
+		description = creator.getInventorySystem().getItemDescriptionFromDatabase(new IdentificationNumber(123));
 		item = new Item(description, 1);
+		
 	}
 
 	@AfterEach
 	void tearDown() throws Exception {
 	}
-
+	
 	@Test
 	void testCorrectCalculatedPrice() {
 		double calculatedPrice = 5 + (0.1 * 5);

@@ -7,10 +7,7 @@ import model.util.Amount;
 
 /**
  * This class represents an unique item that's being processed in the sale. This
- * means that its price and quantity is mutable.
- * 
- * @author kim
- *
+ * means that its total price and quantity is mutable.
  */
 
 public class Item {
@@ -26,7 +23,7 @@ public class Item {
 	 * quantity. It also calculates and initializes the item price from the price
 	 * and VAT rate provided by the item description.
 	 * 
-	 * @param description The {@link ItemDescription} adjoined to the
+	 * @param description The {@link ItemDescription} relating to the
 	 *                    <code>Item</code>.
 	 * @param quantity    Amount of the corresponding item being processed.
 	 */
@@ -50,26 +47,50 @@ public class Item {
 		return new PurchasedItemInformation(this);
 	}
 
+	/** 
+	 * Returns the total quantity of this item that has been sold.
+	 * @return the quantity as an <code>int</code>.
+	 */
 	public int getQuantity() {
 		return quantity;
 	}
 
+	/**
+	 * Returns the related item description to this item.
+	 * @return the related <code>ItemDescription</code>.
+	 */
 	public ItemDescription getItemDescription() {
 		return description;
 	}
 
+	/**
+	 * Returns the price per unit of this item.
+	 * @return the unit price as an <code>Amount</code>.
+	 */
 	public Amount getUnitPrice() {
 		return unitPrice;
 	}
 
+	/**
+	 * Returns the VAT tax per unit of this item.
+	 * @return the unit VAT tax as an <code>Amount</code>.
+	 */
 	public Amount getUnitVatTax() {
 		return unitVatTax;
 	}
 
+	/**
+	 * Returns the current total price of this item.
+	 * @return the accumulated price as an <code>Amount</code>.
+	 */
 	public Amount getAccumulatedPrice() {
 		return accumulatedPrice;
 	}
 
+	/**
+	 * Returns the current total VAT tax of this item.
+	 * @return the accumulated VAT tax as an <code>Amount</code>.
+	 */
 	public Amount getAccumulatedVatTax() {
 		return accumulatedVatTax;
 	}

@@ -2,7 +2,6 @@ package controller;
 
 import integration.cashregister.CashRegister;
 import integration.dbhandler.AccountingSystem;
-import integration.dbhandler.DiscountSystem;
 import integration.dbhandler.InventorySystem;
 import integration.dbhandler.SaleLog;
 import integration.dbhandler.SystemCreator;
@@ -15,16 +14,13 @@ import model.dto.CurrentSaleInformation;
 import model.dto.SaleInformation;
 import model.pos.Sale;
 import model.util.Amount;
-import model.util.Change;
 import model.util.IdentificationNumber;
 
 /**
  * Handles all the system operations in the program. 
- *
  */
 public class Controller {
 	private InventorySystem inventorySystem;
-	private DiscountSystem discountSystem;
 	private AccountingSystem accountingSystem;
 	private SaleLog saleLog;
 	
@@ -44,7 +40,6 @@ public class Controller {
 	 */
 	public Controller(SystemCreator creator) {
 		inventorySystem = creator.getInventorySystem();
-		discountSystem = creator.getDiscountSystem();
 		accountingSystem = creator.getAccountingSystem();
 		saleLog = creator.getSaleLog();
 		
@@ -99,7 +94,7 @@ public class Controller {
 	 */
 	public Amount processSale(Amount amountPaid) {
 		Amount totalPrice = saleInfo.getPriceInfo().getTotalPrice();
-		Amount amountOfChange = getChange(totalPrice, amountPaid); 
+		Amount amountOfChange = amountPaid.subtract(totalPrice); 
 		
 		updateBalanceInCashRegister(totalPrice);
 		
@@ -107,15 +102,11 @@ public class Controller {
 		
 		accountingSystem.updateAccounting(receipt);
 		saleLog.logSale(receipt);
-		inventorySystem.updateQuantityOfSoldItems(saleInfo);
+		inventorySystem.updateQuantityOfItems(saleInfo);
 		
-		currentSale.printReceipt(printer, receipt);
+		printer.printReceipt(receipt);
 		
 		return amountOfChange;
-	}
-	
-	private Amount getChange(Amount totalPrice, Amount amountPaid) {
-		return new Change().calculateChange(totalPrice, amountPaid);
 	}
 	
 	private Amount updateBalanceInCashRegister(Amount totalPrice) {

@@ -1,12 +1,9 @@
 package model.util;
 
 import java.math.BigDecimal;
-import java.math.RoundingMode;
 
 /**
  * Represents an amount of any kind. For example an item price or a VAT rate.
- * @author kim
- *
  */
 public class Amount {
 	private BigDecimal amount;
@@ -30,6 +27,11 @@ public class Amount {
 		this.amount = otherAmount.getValue();
 	}
 	
+	/**
+	 * Constructs a new <code>Amount</code> from a {@link BigDecimal}
+	 * object.
+	 * @param amount A <code>BigDecimal</code> value.
+	 */
 	public Amount(BigDecimal amount) {
 		this.amount = new BigDecimal(amount.toPlainString());
 	}
@@ -57,8 +59,8 @@ public class Amount {
 	 * @param amountToAdd The multiplier.
 	 * @return A new <code>Amount</code> with the resulting product as its value.
 	 */
-	public Amount multiply(Amount amountToMultiply) {
-		return new Amount(amount.multiply(amountToMultiply.getValue()));
+	public Amount multiply(Amount multiplicand) {
+		return new Amount(amount.multiply(multiplicand.getValue()));
 	}
 	
 	/**
@@ -93,6 +95,9 @@ public class Amount {
 		return false;
 	}
 	
+	/**
+	 * Returns the amount value as a <code>String</code>.
+	 */
 	public String toString() {
 		return String.format("%.2f", amount.doubleValue());
 	}

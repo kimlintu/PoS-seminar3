@@ -3,9 +3,8 @@ package model.dto;
 /**
  * A data container with information about the most recently purchased item
  * and running total.
- *
  */
-public class CurrentSaleInformation {
+public final class CurrentSaleInformation {
 	private final PurchasedItemInformation recentlyPurchasedItem;
 	private final PriceInformation runningTotal;
 	

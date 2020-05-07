@@ -3,11 +3,9 @@ package model.dto;
 import model.util.Amount;
 
 /**
- * This is a data container for the total price and the total VAT tax for the current sale.
- * @author kim
- *
+ * This is an immutable data container for the total price and the total VAT tax for a sale.
  */
-public class PriceInformation {
+public final class PriceInformation {
 	private final Amount totalPrice;
 	private final Amount totalVat;
 	
@@ -37,6 +35,10 @@ public class PriceInformation {
 		return totalVat;
 	}
 	
+	/**
+	 * A string representation of this object. Shows the total price(including VAT) and 
+	 * the total VAT tax.
+	 */
 	public String toString() {
 		return String.format("%s %25s", "TOTAL: " + totalPrice, "VAT tax: " + totalVat);
 	}

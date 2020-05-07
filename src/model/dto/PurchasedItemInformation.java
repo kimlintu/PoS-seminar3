@@ -5,13 +5,10 @@ import model.pos.Item;
 import model.util.Amount;
 
 /**
- * This is a data container containing information about an item that has been
+ * This is an immutable data object containing information about an item that has been
  * processed in the sale.
- * 
- * @author kim
- *
  */
-public class PurchasedItemInformation {
+public final class PurchasedItemInformation {
 	private final ItemDescription description;
 	private final Amount accumulatedPrice;
 	private final Amount accumulatedVatTax;
@@ -65,6 +62,7 @@ public class PurchasedItemInformation {
 
 	/**
 	 * Returns the price per unit for this item type.
+	 * 
 	 * @return The unit price as an <code>Amount</code>.
 	 */
 	public Amount getUnitPrice() {
@@ -73,6 +71,7 @@ public class PurchasedItemInformation {
 
 	/**
 	 * Returns the VAT tax per unit for this item type.
+	 * 
 	 * @return The VAT tax as an <code>Amount</code>.
 	 */
 	public Amount getUnitVatTax() {
@@ -107,12 +106,12 @@ public class PurchasedItemInformation {
 	}
 
 	/**
-	 * Gives a string representation of this object containing its name,
-	 * total quantity, unit price and accumulated price.
+	 * Gives a string representation of this object containing its name, total
+	 * quantity, unit price and accumulated price.
 	 */
 	public String toString() {
 		StringBuilder sb = new StringBuilder();
-		
+
 		sb.append(String.format("%-15s %-15s %s", description.getName(), quantity + "*" + unitPrice, accumulatedPrice));
 		return sb.toString();
 	}

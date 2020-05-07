@@ -8,8 +8,6 @@ import model.pos.Item;
 /**
  * A data container for all the available information about the sale, such as time of sale,
  * price information and the items processed so far.
- * @author kim
- *
  */
 public class SaleInformation {
 	private final PriceInformation priceInfo;
@@ -50,8 +48,8 @@ public class SaleInformation {
 	}
 	
 	/**
-	 * Creates a list with immutable item objects, to be passed as data
-	 * when the sale is being processed.
+	 * Creates a list with immutable item objects from the items
+	 * that has been sold.
 	 * @param itemList The list of items that was sold.
 	 * @return a new list with immutable data containers with information about
 	 * each sold item.

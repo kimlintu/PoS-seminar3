@@ -1,6 +1,6 @@
 package controller;
 
-import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.*;
 
 import java.math.BigDecimal;
 
@@ -12,14 +12,22 @@ import org.junit.jupiter.api.Test;
 
 import integration.dbhandler.SystemCreator;
 import integration.dbhandler.data.ItemDescription;
+import model.dto.CurrentSaleInformation;
 import model.dto.ItemPrice;
 import model.dto.PriceInformation;
+import model.dto.PurchasedItemInformation;
+import model.pos.Item;
 import model.util.Amount;
 import model.util.IdentificationNumber;
 
 class ControllerTest {
 	private Controller controller;
-	private ItemDescription existingDescription;
+	private ItemDescription existingDescriptionApple;
+	private ItemDescription existingDescriptionCoffee;
+
+	private Amount itemPrice;
+	private Amount itemVatTax;
+	private double stdVatRate = 0.16;
 
 	@BeforeAll
 	static void setUpBeforeClass() throws Exception {
@@ -34,43 +42,73 @@ class ControllerTest {
 		SystemCreator creator = new SystemCreator();
 		controller = new Controller(creator);
 
-		existingDescription = new ItemDescription("apple", new ItemPrice(new Amount(5), new Amount(0.1)),
-				new IdentificationNumber(123));
+		existingDescriptionApple = creator.getInventorySystem()
+				.getItemDescriptionFromDatabase(new IdentificationNumber(123));
+		existingDescriptionCoffee = creator.getInventorySystem()
+				.getItemDescriptionFromDatabase(new IdentificationNumber(666));
+
+		itemVatTax = new Amount(stdVatRate * 5);
+		itemPrice = new Amount(5).add(itemVatTax);
 	}
 
 	@AfterEach
 	void tearDown() throws Exception {
 		controller = null;
-		existingDescription = null;
+		existingDescriptionApple = null;
 	}
-/*
+
 	@Test
-	void testCorrectItemDescription() {
+	void testCorrectCurrentSaleInfo() {
 		controller.startSale();
+		CurrentSaleInformation saleInfo = controller.processItem(existingDescriptionApple.getID(), 1);
 
-		ItemDescription retrievedDescription = controller.processItem(existingDescription.getID(), 1);
+		Amount expectedRunningTotal = itemPrice;
+		Amount retrievedRunningTotal = saleInfo.getRunningTotal().getTotalPrice();
+		assertTrue(retrievedRunningTotal.equals(expectedRunningTotal),
+				"Running total does not match expected price. Got " + retrievedRunningTotal + " expected "
+						+ expectedRunningTotal);
 
-		assertTrue(existingDescription.equals(retrievedDescription),
-				"Incorrect item description recieved from inventory. Expected " + existingDescription.toString()
-						+ " got " + retrievedDescription.toString());
+		ItemDescription expectedItemDescription = existingDescriptionApple;
+		ItemDescription retrievedItemDescription = saleInfo.getLatestItemDescription().getItemDescription();
+		assertTrue(retrievedItemDescription.equals(expectedItemDescription),
+				"Retrieved item description does not match most recently processed item.");
+
 	}
-*/
+
 	@Test
 	void testCorrectPriceInfo() {
+		int purchasedQuantity = 3;
 		controller.startSale();
-		controller.processItem(existingDescription.getID(), 3);
+		controller.processItem(existingDescriptionApple.getID(), purchasedQuantity);
 
-		Amount expectedTotalPrice = new Amount((5 + (5 * 0.16)) * 3);
-		Amount expectedTotalVat = new Amount(new BigDecimal(String.valueOf(2.4)));
+		Amount expectedTotalPrice = itemPrice.multiply(purchasedQuantity);
+		Amount expectedTotalVat = itemVatTax.multiply(purchasedQuantity);
 
 		PriceInformation priceInfo = controller.endSale();
 		Amount receivedTotalPrice = priceInfo.getTotalPrice();
 		Amount receivedTotalVat = priceInfo.getTotalVat();
 
-		assertTrue(receivedTotalPrice.equals(expectedTotalPrice), "Received total price "
-				+ receivedTotalPrice.getValue().doubleValue() + " does not match, expected " + expectedTotalPrice.getValue());
-		assertTrue(receivedTotalVat.equals(expectedTotalVat), "Received total VAT "
-				+ receivedTotalVat.getValue().doubleValue() + " does not match, expected " + expectedTotalVat.getValue());
+		assertTrue(receivedTotalPrice.equals(expectedTotalPrice),
+				"Received total price " + receivedTotalPrice.getValue().doubleValue() + " does not match, expected "
+						+ expectedTotalPrice.getValue());
+		assertTrue(receivedTotalVat.equals(expectedTotalVat),
+				"Received total VAT " + receivedTotalVat.getValue().doubleValue() + " does not match, expected "
+						+ expectedTotalVat.getValue());
+	}
+
+	@Test
+	void testCorrectChangeAmount() {
+		controller.startSale();
+		controller.processItem(existingDescriptionApple.getID(), 1);
+		controller.processItem(existingDescriptionCoffee.getID(), 4);
+		
+		Amount totalPrice = controller.endSale().getTotalPrice();
+		Amount amountPaid = new Amount(232.25);
+		
+		Amount expectedChangeAmount = amountPaid.subtract(totalPrice);
+		Amount actualChangeAmount = controller.processSale(amountPaid);
+		
+		assertEquals(expectedChangeAmount, actualChangeAmount, "Calculated change is incorrect. Expected " + expectedChangeAmount + ", got " + actualChangeAmount);
 	}
 
 }

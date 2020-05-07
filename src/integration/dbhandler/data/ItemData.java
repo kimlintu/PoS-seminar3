@@ -4,7 +4,6 @@ package integration.dbhandler.data;
  * This class represents a item data object in the "database". It contains the description
  * and the available quantity of the item. Its attributes are mutable so that they could
  * be updated in the future.
- * @author kim
  *
  */
 public class ItemData {

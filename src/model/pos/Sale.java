@@ -1,22 +1,18 @@
 package model.pos;
 
-import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.List;
 
 import integration.dbhandler.InventorySystem;
 import integration.dbhandler.data.ItemDescription;
-import integration.printer.Printer;
 import model.dto.PurchasedItemInformation;
 import model.dto.Receipt;
 import model.dto.SaleInformation;
 import model.util.Amount;
 
 /**
- * This class represents the ongoing sale.
- * 
- * @author kim
- *
+ * This class represents the ongoing sale. It has an internal array list 
+ * that holds the sold items.
  */
 public class Sale {
 	private List<Item> itemList;
@@ -39,7 +35,7 @@ public class Sale {
 	 * 
 	 * @param itemDescription   description of the item that's stored in the
 	 *                          {@link InventorySystem}.
-	 * @param purchasedQuantity Amount of the corresponding item being processed.
+	 * @param purchasedQuantity Amount of the corresponding item being purchased.
 	 * 
 	 * @return Information about the most recently purchased item.
 	 */
@@ -47,12 +43,12 @@ public class Sale {
 		Item purchasedItem = new Item(itemDescription, purchasedQuantity);
 
 		if (itemList.contains(purchasedItem)) {
-			Item itemInList = getItemFromItemList(purchasedItem);
+			Item itemInList = getItemFromList(purchasedItem);
 			
-			updateQuantityOfItemInItemList(itemInList, purchasedQuantity);
-			updatePriceOfItemInItemList(itemInList, purchasedQuantity);
+			updateQuantityOfItemInList(itemInList, purchasedQuantity);
+			updatePriceOfItemInList(itemInList, purchasedQuantity);
 		} else {
-			addItemToItemList(purchasedItem);
+			addItemToList(purchasedItem);
 		}
  
 		totalPrice.addToTotalPrice(purchasedItem);
@@ -70,7 +66,8 @@ public class Sale {
 	}
 
 	/**
-	 * Complete the sale and create a receipt.
+	 * Complete the sale and create a receipt containing the complete
+	 * sale information.
 	 * 
 	 * @param saleInfo       The information about the sale specified by
 	 *                       {@link SaleInformation}.
@@ -84,29 +81,19 @@ public class Sale {
 		return receipt;
 	}
 
-	/**
-	 * Print the receipt for the sale.
-	 * 
-	 * @param printer The printer that will print out the receipt.
-	 * @param receipt The receipt that should be printed.
-	 */
-	public void printReceipt(Printer printer, Receipt receipt) {
-		printer.printReceipt(receipt);
-	}
-
-	private void updateQuantityOfItemInItemList(Item item, int quantity) {
+	private void updateQuantityOfItemInList(Item item, int quantity) {
 		item.addToQuantity(quantity);
 	}
 
-	private void updatePriceOfItemInItemList(Item item, int quantity) {
+	private void updatePriceOfItemInList(Item item, int quantity) {
 		item.increaseAccumulatedPrice(quantity);
 	}
 
-	private Item getItemFromItemList(Item item) {
+	private Item getItemFromList(Item item) {
 		return itemList.get(itemList.indexOf(item)); 
 	}
 
-	private void addItemToItemList(Item item) {
+	private void addItemToList(Item item) {
 		itemList.add(item);
 	}
 }

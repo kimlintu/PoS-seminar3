@@ -2,8 +2,6 @@ package model.util;
 
 /**
  * Represents an identification number.
- * @author kim
- *
  */
 public class IdentificationNumber {
 	private long number;
@@ -15,6 +13,16 @@ public class IdentificationNumber {
 	 */
     public IdentificationNumber(long number) {
     	this.number = number;
+    }
+    
+    /**
+     * Constructs a <code>IdentificationNumber</code> that represents
+     * the same value as the passed object.
+     * @param id The <code>IdentificationNumber</code> that should be
+     * copied.
+     */
+    public IdentificationNumber(IdentificationNumber id) {
+    	this.number = id.getID();
     }
     
     /**
@@ -32,8 +40,12 @@ public class IdentificationNumber {
      * @return Returns <code>true</code> if the numbers that the <code>IdentificationNumber</code> 
      * objects are representing are equal, <code>false</code> otherwise.
      */
-    public boolean equals(IdentificationNumber id) {
-    	if(id.getID() == this.getID()) return true;
+    @Override
+    public boolean equals(Object anObject) {
+    	if(anObject instanceof IdentificationNumber) {
+    		IdentificationNumber otherID = (IdentificationNumber) anObject;
+    		return (this.number == otherID.getID());
+    	}
     	
     	return false;
     }

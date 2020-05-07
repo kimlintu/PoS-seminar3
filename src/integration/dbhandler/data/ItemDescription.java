@@ -6,9 +6,7 @@ import model.util.IdentificationNumber;
 
 /**
  * This class is a data container that contains information pertaining to an item, including its
- * name, price info contained in {@link PriceInformation} and its unique id.
- * @author kim
- *
+ * name, ID and its price information.
  */
 public class ItemDescription {
 	private final String name;
@@ -19,8 +17,8 @@ public class ItemDescription {
 	 * Constructs an item description that is used to describe an unique item that 
 	 * exists in the {@link InventorySystem}. 
 	 * @param name Name of the item.
-	 * @param price Price of the item.
-	 * @param vatRate The VAT rate that gets applied to the item price.
+	 * @param priceInfo An {@link ItemPrice} object with information about
+	 * this items price.
 	 * @param id An unique id that identifies the item.
 	 */
 	public ItemDescription(String name, ItemPrice priceInfo, IdentificationNumber id) {
@@ -39,7 +37,7 @@ public class ItemDescription {
 	}
 	
 	/**
-	 * Returns the name of the item that the <code>ItemDescription</code>
+	 * Returns the name of the item that this <code>ItemDescription</code>
 	 * is describing.
 	 * @return The item <code>name</code> as a <code>String</code>.
 	 */
@@ -49,18 +47,19 @@ public class ItemDescription {
 	
 	/**
 	 * Returns an {@link ItemPrice} that contains information about the item price and vat rate.
-	 * @return An {@link ItemPrice} object.
+	 * @return An <code>ItemPrice</code> object.
 	 */
 	public ItemPrice getPriceInfo() {
 		return priceInfo;
 	}
 	
 	/**
-	 * Compares the item description to the object. 
+	 * Compares the item description to an object. 
 	 * 
 	 * @param anObject The object to compare the <code>ItemDescription</code> against.
 	 * @return <code>true</code> if the object represents an <code>ItemDescription</code> 
-	 * and has an {@link IdentificationNumber} equivalent to the other <code>ItemDescription</code>.
+	 * and has an {@link IdentificationNumber} equivalent to the other <code>ItemDescription</code>,
+	 * <code>false</code> otherwise.
 	 */
 	@Override
 	public boolean equals(Object anObject) {
@@ -70,9 +69,5 @@ public class ItemDescription {
 		}
 		
 		return false;
-	}
-	
-	public String toString() {
-		return "[" + name + ", " + "]";
 	}
 }

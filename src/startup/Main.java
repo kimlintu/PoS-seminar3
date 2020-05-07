@@ -2,7 +2,6 @@ package startup;
 
 import controller.Controller;
 import integration.dbhandler.SystemCreator;
-import model.util.IdentificationNumber;
 import view.View;
 
 public class Main {

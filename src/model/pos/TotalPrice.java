@@ -1,14 +1,11 @@
 package model.pos;
 
-import model.dto.PurchasedItemInformation;
 import model.dto.PriceInformation;
 import model.util.Amount;
 
 /**
  * Represents the total price of the ongoing sale. Includes the total price including
- * VAT tax but also the VAT tax as a seperate amount.
- * @author kim
- *
+ * VAT tax but also the VAT tax as a separate amount.
  */
 public class TotalPrice {
 	private Amount totalPriceAmount;
@@ -23,6 +20,11 @@ public class TotalPrice {
 		totalVatAmount = new Amount(0);
 	}
 	
+	/**
+	 * Retrieves a new {@link PriceInformation} object containing
+	 * the total price and total vat tax.
+	 * @return the price information.
+	 */
 	PriceInformation getPriceInfo() {
 		return new PriceInformation(totalPriceAmount, totalVatAmount);
 	}
@@ -34,12 +36,12 @@ public class TotalPrice {
 	 * @param item Item whose price is getting added to the total. 
 	 */
 	void addToTotalPrice(Item item) {
-		PurchasedItemInformation itemInfo = item.getItemInformation();
-		Amount itemPrice = itemInfo.getUnitPrice();
+		Amount itemUnitPrice = item.getUnitPrice();
+		Amount itemUnitVat = item.getUnitVatTax();
 		
-		totalPriceAmount = totalPriceAmount.add(itemPrice.multiply(itemInfo.getQuantity()));
+		totalPriceAmount = totalPriceAmount.add(itemUnitPrice.multiply(item.getQuantity()));
 		
-		addToTotalVat(itemInfo.getUnitVatTax().multiply(itemInfo.getQuantity()));
+		addToTotalVat(itemUnitVat.multiply(item.getQuantity()));
 	}
 	
 	private void addToTotalVat(Amount itemVatAmount) {
