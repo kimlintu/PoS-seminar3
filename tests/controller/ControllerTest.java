@@ -2,6 +2,8 @@ package controller;
 
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
+import java.math.BigDecimal;
+
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeAll;
@@ -58,17 +60,17 @@ class ControllerTest {
 		controller.startSale();
 		controller.processItem(existingDescription.getID(), 3);
 
-		Amount expectedTotalPrice = new Amount((5 + (5 * 0.1)) * 3);
-		Amount expectedTotalVat = new Amount((5 * 0.1) * 3);
+		Amount expectedTotalPrice = new Amount((5 + (5 * 0.16)) * 3);
+		Amount expectedTotalVat = new Amount(new BigDecimal(String.valueOf(2.4)));
 
 		PriceInformation priceInfo = controller.endSale();
 		Amount receivedTotalPrice = priceInfo.getTotalPrice();
 		Amount receivedTotalVat = priceInfo.getTotalVat();
 
 		assertTrue(receivedTotalPrice.equals(expectedTotalPrice), "Received total price "
-				+ receivedTotalPrice.getValue() + " does not match, expected " + expectedTotalPrice.getValue());
+				+ receivedTotalPrice.getValue().doubleValue() + " does not match, expected " + expectedTotalPrice.getValue());
 		assertTrue(receivedTotalVat.equals(expectedTotalVat), "Received total VAT "
-				+ receivedTotalVat.getValue() + " does not match, expected " + expectedTotalVat.getValue());
+				+ receivedTotalVat.getValue().doubleValue() + " does not match, expected " + expectedTotalVat.getValue());
 	}
 
 }

@@ -84,9 +84,10 @@ public class Item {
 	}
 
 	/**
-	 * Increase the total cost of the item(s).
+	 * Increase the total cost of this type of item. This method will
+	 * also increase the total VAT tax.
 	 * 
-	 * @param quantity How many more of this item that has been purchased.
+	 * @param quantity How many of this item that's being processed.
 	 */
 	void increaseAccumulatedPrice(int quantity) {
 		accumulatedPrice = accumulatedPrice.add(unitPrice.multiply(quantity));

@@ -38,4 +38,8 @@ public class IdentificationNumber {
     	return false;
     }
     
+    public String toString() {
+    	return "" + number;
+    }
+    
 }

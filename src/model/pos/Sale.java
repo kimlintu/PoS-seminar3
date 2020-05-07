@@ -40,20 +40,23 @@ public class Sale {
 	 * @param itemDescription   description of the item that's stored in the
 	 *                          {@link InventorySystem}.
 	 * @param purchasedQuantity Amount of the corresponding item being processed.
+	 * 
+	 * @return Information about the most recently purchased item.
 	 */
-	public void addItemToSale(ItemDescription itemDescription, int purchasedQuantity) {
+	public PurchasedItemInformation addItemToSale(ItemDescription itemDescription, int purchasedQuantity) {
 		Item purchasedItem = new Item(itemDescription, purchasedQuantity);
 
 		if (itemList.contains(purchasedItem)) {
 			Item itemInList = getItemFromItemList(purchasedItem);
-			PurchasedItemInformation itemInfo = itemInList.getItemInformation();
+			
 			updateQuantityOfItemInItemList(itemInList, purchasedQuantity);
 			updatePriceOfItemInItemList(itemInList, purchasedQuantity);
 		} else {
 			addItemToItemList(purchasedItem);
 		}
-
+ 
 		totalPrice.addToTotalPrice(purchasedItem);
+		return purchasedItem.getItemInformation();
 	}
 
 	/**
@@ -76,8 +79,7 @@ public class Sale {
 	 * @return
 	 */
 	public Receipt processSale(SaleInformation saleInfo, Amount amountPaid, Amount amountOfChange) {
-		LocalTime timeOfSale = LocalTime.now();
-		Receipt receipt = new Receipt(saleInfo, amountPaid, amountOfChange, timeOfSale);
+		Receipt receipt = new Receipt(saleInfo, amountPaid, amountOfChange);
 
 		return receipt;
 	}
@@ -101,7 +103,7 @@ public class Sale {
 	}
 
 	private Item getItemFromItemList(Item item) {
-		return itemList.get(itemList.indexOf(item));
+		return itemList.get(itemList.indexOf(item)); 
 	}
 
 	private void addItemToItemList(Item item) {

@@ -35,11 +35,11 @@ public class TotalPrice {
 	 */
 	void addToTotalPrice(Item item) {
 		PurchasedItemInformation itemInfo = item.getItemInformation();
-		Amount itemPrice = itemInfo.getAccumulatedPrice();
+		Amount itemPrice = itemInfo.getUnitPrice();
 		
 		totalPriceAmount = totalPriceAmount.add(itemPrice.multiply(itemInfo.getQuantity()));
 		
-		addToTotalVat(itemInfo.getAccumulatedVatTax().multiply(itemInfo.getQuantity()));
+		addToTotalVat(itemInfo.getUnitVatTax().multiply(itemInfo.getQuantity()));
 	}
 	
 	private void addToTotalVat(Amount itemVatAmount) {

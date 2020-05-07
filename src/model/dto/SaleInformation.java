@@ -39,8 +39,6 @@ public class SaleInformation {
 	public PriceInformation getPriceInfo() {
 		return priceInfo;
 	}
-	
-	
 
 	/**
 	 * Returns a <code>List</code> of every item that was sold.
@@ -51,6 +49,13 @@ public class SaleInformation {
 		return itemList;
 	}
 	
+	/**
+	 * Creates a list with immutable item objects, to be passed as data
+	 * when the sale is being processed.
+	 * @param itemList The list of items that was sold.
+	 * @return a new list with immutable data containers with information about
+	 * each sold item.
+	 */
 	private List<PurchasedItemInformation> createImmutableItemList(List<Item> itemList) {
 		for(Item i : itemList) {
 			this.itemList.add(i.getItemInformation());

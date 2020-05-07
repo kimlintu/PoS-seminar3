@@ -169,7 +169,7 @@ class SaleTest {
 		sale.addItemToSale(newItem, purchasedQuantity);
 
 		SaleInformation saleInfo = sale.getSaleInformation();
-		Amount totalPrice = saleInfo.getPriceInfo().getTotalPrice();
+		Amount totalPrice = saleInfo.getPriceInfo().getTotalPrice(); 
 		Amount totalVat = saleInfo.getPriceInfo().getTotalVat();
 		List<PurchasedItemInformation> itemList = saleInfo.getListOfSoldItems();
 		

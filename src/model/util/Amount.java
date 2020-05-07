@@ -18,7 +18,7 @@ public class Amount {
 	 * @param amount The amount that the instance will represent.
 	 */
 	public Amount(double amount) {
-		this.amount = new BigDecimal(String.valueOf(amount));
+		this.amount = new BigDecimal(String.valueOf(amount)); 
 	}
 	
 	/**
@@ -87,7 +87,7 @@ public class Amount {
 	public boolean equals(Object o) {
 		if(o instanceof Amount) {
 			Amount amt = (Amount) o;
-			return this.amount == amt.getValue();
+			return this.amount.doubleValue() == amt.getValue().doubleValue();
 		}
 		
 		return false;

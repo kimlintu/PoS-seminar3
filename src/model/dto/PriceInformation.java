@@ -36,4 +36,8 @@ public class PriceInformation {
 	public Amount getTotalVat() {
 		return totalVat;
 	}
+	
+	public String toString() {
+		return String.format("%s %25s", "TOTAL: " + totalPrice, "VAT tax: " + totalVat);
+	}
 }

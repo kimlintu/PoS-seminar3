@@ -24,8 +24,8 @@ public class InventorySystem {
 		createDatabaseEntry(new ItemData(new ItemDescription("orange juice",
 				new ItemPrice(new Amount(12), new Amount(0.16)), new IdentificationNumber(492)), 5));
 		createDatabaseEntry(new ItemData(new ItemDescription("chocolate bar",
-				new ItemPrice(new Amount(10), new Amount(0.16)), new IdentificationNumber(876)), 1));
-	}
+				new ItemPrice(new Amount(10), new Amount(0.16)), new IdentificationNumber(876)), 1)); 
+	} 
 
 	/**
 	 * Searches the database(internal ArrayList) for an {@link ItemDescription} with

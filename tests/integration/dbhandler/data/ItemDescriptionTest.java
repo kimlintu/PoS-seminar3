@@ -51,11 +51,4 @@ class ItemDescriptionTest {
 		assertFalse(description.equals(differentDescription), "Item descriptions with different IDs " + "are equal.");
 	}
 
-	@Test
-	void testToString() {
-		String desiredText = "[name: apple, price: 5.0, VAT: 0.1, ID: 123]";
-		assertTrue(description.toString().equals(desiredText), "String does not match desired text. \n" + "string: "
-				+ description.toString() + "\n" + "desired text: " + desiredText);
-	}
-
 }

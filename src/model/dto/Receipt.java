@@ -1,5 +1,6 @@
 package model.dto;
 
+import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.List;
 
@@ -11,6 +12,7 @@ public class Receipt {
 	private final Amount changeAmount;
 	private final Store store;
 	private final LocalTime timeOfSale;
+	private final LocalDate dateOfSale;
 	
 	/**
 	 * Constructs an instance of <code>Receipt</code> that contains information about the sale, 
@@ -21,11 +23,12 @@ public class Receipt {
 	 * @param timeOfSale The time which this receipt will be created and thus mark the 
 	 * time of the completed sale.
 	 */
-	public Receipt(SaleInformation saleInfo, Amount amountPaid, Amount changeAmount, LocalTime timeOfSale) {
+	public Receipt(SaleInformation saleInfo, Amount amountPaid, Amount changeAmount) {
 		this.saleInfo = saleInfo;
-		this.amountPaid = amountPaid;
+		this.amountPaid = amountPaid; 
 		this.changeAmount = changeAmount;
-		this.timeOfSale = timeOfSale;
+		this.timeOfSale = LocalTime.now();
+		this.dateOfSale = LocalDate.now();
 		
 		this.store = new Store("Real Store", "Real Street 123");
 	}
@@ -78,13 +81,16 @@ public class Receipt {
 		List<PurchasedItemInformation> itemList = saleInfo.getListOfSoldItems();
 		
 		sb.append("-----------------Receipt-----------------\n");
+		sb.append(String.format("%s %35s\n\n", timeOfSale.withNano(0).withSecond(0), dateOfSale));
 		sb.append(String.format("%-15s %-15s %s", "name", "qty*price", "total") + "\n\n");
 		for(PurchasedItemInformation productInfo : itemList) {
-			sb.append(productInfo.toString() + "\n");
+			sb.append(productInfo.toString() + "\n"); 
 		}
 		sb.append("\n-----------------------------------------\n");
-		sb.append(String.format("%s %25s\n", "TOTAL: " + saleInfo.getPriceInfo().getTotalPrice(), "VAT tax: " + saleInfo.getPriceInfo().getTotalVat()));
+		sb.append(String.format("%s\n", saleInfo.getPriceInfo().toString())); 
 		sb.append("-----------------------------------------\n");
+		sb.append("Amount paid: " + amountPaid + "\n");
+		sb.append("Change received: " + changeAmount + "\n");
 		sb.append(String.format("\n%30s\n\n", "Thank you, come again!"));
 		sb.append(String.format("%27s \n%30s\n", "Store: " + store.getName(), "Address: " + store.getAddress()));
 		return sb.toString();

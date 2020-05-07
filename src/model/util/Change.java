@@ -5,3 +5,4 @@ public class Change {
 		return amountPaid.subtract(totalPrice);
 	}
 }
+ 

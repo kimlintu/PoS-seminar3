@@ -37,7 +37,7 @@ class AmountTest {
 		double expectedSum = 10 + 3.2;
 		Amount actualSum = wholeAmount.add(amtToAdd);
 
-		assertEquals(expectedSum, actualSum.getValue(), "Incorrect sum from addition of two Amount: "
+		assertEquals(expectedSum, actualSum.getValue().doubleValue(), "Incorrect sum from addition of two Amount: "
 				+ actualSum.getValue() + " but expected " + expectedSum + ".");
 	}
 
@@ -47,7 +47,7 @@ class AmountTest {
 		double expectedProduct = 10 * 0.5;
 		Amount actualProduct = wholeAmount.multiply(multiplier);
 
-		assertEquals(expectedProduct, actualProduct.getValue(),
+		assertEquals(expectedProduct, actualProduct.getValue().doubleValue(),
 				"Incorrect product from multiplication between two Amount: " + actualProduct.getValue()
 						+ " but expected " + expectedProduct + ".");
 	}
@@ -58,7 +58,7 @@ class AmountTest {
 		double expectedProduct = 10 * 5;
 		Amount actualProduct = wholeAmount.multiply(multiplier);
 
-		assertEquals(expectedProduct, actualProduct.getValue(),
+		assertEquals(expectedProduct, actualProduct.getValue().doubleValue(),
 				"Incorrect product from multiplication between Amount and int: " + actualProduct.getValue()
 						+ " but expected " + expectedProduct + ".");
 	}

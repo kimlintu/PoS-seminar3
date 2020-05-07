@@ -63,10 +63,18 @@ public class PurchasedItemInformation {
 		return accumulatedVatTax;
 	}
 
+	/**
+	 * Returns the price per unit for this item type.
+	 * @return The unit price as an <code>Amount</code>.
+	 */
 	public Amount getUnitPrice() {
 		return unitPrice;
 	}
 
+	/**
+	 * Returns the VAT tax per unit for this item type.
+	 * @return The VAT tax as an <code>Amount</code>.
+	 */
 	public Amount getUnitVatTax() {
 		return unitVatTax;
 	}
@@ -98,6 +106,10 @@ public class PurchasedItemInformation {
 		return false;
 	}
 
+	/**
+	 * Gives a string representation of this object containing its name,
+	 * total quantity, unit price and accumulated price.
+	 */
 	public String toString() {
 		StringBuilder sb = new StringBuilder();
 		

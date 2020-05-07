@@ -4,6 +4,10 @@ import java.util.Random;
 
 import model.util.Amount;
 
+/**
+ * This class reprsents the cash register system.
+ *
+ */
 public class CashRegister {
 	private Random random = new Random();
 	private Amount balance = new Amount(random.nextDouble() * 500 + 500);

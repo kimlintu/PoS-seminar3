@@ -71,4 +71,8 @@ public class ItemDescription {
 		
 		return false;
 	}
+	
+	public String toString() {
+		return "[" + name + ", " + "]";
+	}
 }

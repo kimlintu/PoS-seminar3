@@ -9,7 +9,9 @@ import integration.dbhandler.SystemCreator;
 import integration.dbhandler.data.ItemDescription;
 import integration.printer.Printer;
 import model.dto.PriceInformation;
+import model.dto.PurchasedItemInformation;
 import model.dto.Receipt;
+import model.dto.CurrentSaleInformation;
 import model.dto.SaleInformation;
 import model.pos.Sale;
 import model.util.Amount;
@@ -18,7 +20,6 @@ import model.util.IdentificationNumber;
 
 /**
  * Handles all the system operations in the program. 
- * @author kim
  *
  */
 public class Controller {
@@ -35,8 +36,8 @@ public class Controller {
 	
 	/**
 	 * Creates a new instance and initializes references to the external systems
-	 * {@link InventorySystem}, {@link DiscountSystem}, {@link AccountingSystem}, {@link SaleLog}
-	 * and {@link Printer}
+	 * {@link InventorySystem}, {@link DiscountSystem}, {@link AccountingSystem}, {@link SaleLog},
+	 * {@link Printer} and {@link CashRegister}.
 	 * 
 	 * @param creator A {@link SystemCreator} object that has references to all the 
 	 * external systems.
@@ -52,7 +53,8 @@ public class Controller {
 	}
 	
 	/**
-	 * Gives a reference to a new Sale object to <code>currentSale</code> in this <code>Controller</code>
+	 * Starts a new sale and initializes the <code>Sale</code> object 
+	 * in this controller with that new sale.
 	 */
 	public void startSale() {
 		currentSale = new Sale();
@@ -73,16 +75,18 @@ public class Controller {
 	 * Processes the item by either adding the item to the sale,
 	 * or updating its quantity if an identical item has already been processed. 
 	 * 
-	 * @param itemID The unique id for the item that's being processed.
+	 * @param itemID The unique id for the item that should be processed.
 	 * @param quantity Amount of items being processed.
-	 * @return An {@link ItemDescription} that gets retrieved from the {@link InventorySystem} using the 
-	 * specified <code>itemID</code>
+	 * @return An {@link CurrentSaleInformation} object containing information
+	 * about the most recently purchased item and the running total.
 	 */
-	public SaleInformation processItem(IdentificationNumber itemID, int quantity) {
+	public CurrentSaleInformation processItem(IdentificationNumber itemID, int quantity) {
 		ItemDescription itemDescription = inventorySystem.getItemDescriptionFromDatabase(itemID);
-		currentSale.addItemToSale(itemDescription, quantity);
+		PurchasedItemInformation itemInfo = currentSale.addItemToSale(itemDescription, quantity);
 		
-		return currentSale.getSaleInformation();
+		CurrentSaleInformation currentSaleInformation = new CurrentSaleInformation(itemInfo, currentSale.getSaleInformation().getPriceInfo());
+		
+		return currentSaleInformation;
 	}
 	
 	/**
@@ -93,7 +97,7 @@ public class Controller {
 	 * @param amountPaid The amount paid by the customer.
 	 * @return The amount of change to be received by the customer.
 	 */
-	public Amount enterAmountPaid(Amount amountPaid) {
+	public Amount processSale(Amount amountPaid) {
 		Amount totalPrice = saleInfo.getPriceInfo().getTotalPrice();
 		Amount amountOfChange = getChange(totalPrice, amountPaid); 
 		
