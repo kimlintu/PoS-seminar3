@@ -56,7 +56,7 @@ public class InventorySystem {
 	/**
 	 * Updates the quantity of the items in the database that was 
 	 * processed in the sale.
-	 * @param saleInfo The information about the sale. Contains the list 
+	 * @param saleInfo The information about the completed sale. Contains the list 
 	 * of sold items.
 	 */
 	public void updateQuantityOfItems(Receipt saleInfo) {

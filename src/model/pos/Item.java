@@ -6,7 +6,7 @@ import model.util.Amount;
 
 /**
  * This class represents an unique item that's being processed in the sale. This
- * means that its total price and quantity is mutable.
+ * means that its quantity is mutable.
  */
 
 public class Item {

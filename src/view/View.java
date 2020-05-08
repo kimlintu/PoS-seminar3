@@ -4,7 +4,7 @@ import java.util.Random;
 
 import controller.Controller;
 import model.dto.PriceInformation;
-import model.dto.CurrentSaleInformation;
+import model.dto.RecentPurchaseInformation;
 import model.util.Amount;
 import model.util.IdentificationNumber;
 
@@ -38,9 +38,9 @@ public class View {
 	 * Processes the item represented by the specified item ID.
 	 * @param itemID The ID of the item that should be processed.
 	 * @param quantity Quantity of the item being purchased.
-	 * @return a {@link CurrentSaleInformation} 
+	 * @return a {@link RecentPurchaseInformation} 
 	 */
-	public CurrentSaleInformation enterItemIdentifier(IdentificationNumber itemID, int quantity) {
+	public RecentPurchaseInformation enterItemIdentifier(IdentificationNumber itemID, int quantity) {
 		return controller.processItem(itemID, quantity);
 	}
 
@@ -63,7 +63,7 @@ public class View {
 			int quantity = rand.nextInt(9) + 1;
 			
 			System.out.println("Purchasing " + quantity + " item(s) with id " + validIDs[i].toString());
-			CurrentSaleInformation recentSaleInformation = enterItemIdentifier(validIDs[i], quantity);
+			RecentPurchaseInformation recentSaleInformation = enterItemIdentifier(validIDs[i], quantity);
 			System.out.println(recentSaleInformation);
 		}
 		

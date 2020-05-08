@@ -5,8 +5,8 @@ import model.pos.Item;
 import model.util.Amount;
 
 /**
- * This is an immutable data object containing information about an item that has been
- * processed in the sale.
+ * This is an immutable data object containing information about an item that
+ * has been processed in the sale.
  */
 public final class PurchasedItemInformation {
 	private final ItemDescription description;
@@ -20,9 +20,7 @@ public final class PurchasedItemInformation {
 	 * Constructs an <code>ItemInformation</code> and stores description, price and
 	 * quantity of a processed item.
 	 * 
-	 * @param description      The {@link ItemDescription} of the item.
-	 * @param accumulatedPrice The price (including VAT tax) of the item.
-	 * @param quantity         The current quantity of the item being processed.
+	 * @param item The item that this object should store data from.
 	 */
 	public PurchasedItemInformation(Item item) {
 		this.description = item.getItemDescription();

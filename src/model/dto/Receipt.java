@@ -9,8 +9,8 @@ import model.pos.Item;
 import model.util.Amount;
 
 /**
- * An immutable data container with information about the completed sale, store 
- * and the time of the sale. 
+ * An immutable data container with information about the completed sale, store
+ * and the time of the sale.
  */
 public class Receipt {
 	private final List<PurchasedItemInformation> itemList;
@@ -26,11 +26,11 @@ public class Receipt {
 	 * about the sale, payment amount, change amount, time of sale and store
 	 * information.
 	 * 
-	 * @param saleInfo     The available information about the completed sale.
+	 * @param itemList     A list containing the sold items.
+	 * @param priceInfo    Price information from the sale.
 	 * @param amountPaid   The amount paid by the customer in the sale.
-	 * @param changeAmount The amount of change the customer received after payment.
-	 * @param timeOfSale   The time which this receipt will be created and thus mark
-	 *                     the time of the completed sale.
+	 * @param changeAmount The amount of change the customer should receive after
+	 *                     payment.
 	 */
 	public Receipt(List<Item> itemList, PriceInformation priceInfo, Amount amountPaid, Amount changeAmount) {
 		this.itemList = new ArrayList<>();
@@ -41,21 +41,22 @@ public class Receipt {
 		this.dateOfSale = LocalDate.now();
 
 		this.store = new Store("Real Store", "Real Street 123");
-		
+
 		createImmutableItemList(itemList);
 	}
 
 	/**
-	 * Returns a list that contains immutable data objects
-	 * of the sold items. 
+	 * Returns a list that contains immutable data objects of the sold items.
+	 * 
 	 * @return An array list.
 	 */
 	public List<PurchasedItemInformation> getListOfSoldItems() {
 		return itemList;
 	}
-	
+
 	/**
 	 * Returns the price information of the sale.
+	 * 
 	 * @return A {@link PriceInformation} object.
 	 */
 	public PriceInformation getPriceInfo() {
@@ -98,16 +99,16 @@ public class Receipt {
 	public Store getStore() {
 		return store;
 	}
-	
+
 	/**
-	 * Creates a list with immutable item objects from the items
-	 * that has been sold.
+	 * Creates a list with immutable item objects from the items that has been sold.
+	 * 
 	 * @param itemList The list of items that was sold.
-	 * @return a new list with immutable data containers with information about
-	 * each sold item.
+	 * @return a new list with immutable data containers with information about each
+	 *         sold item.
 	 */
 	private void createImmutableItemList(List<Item> itemList) {
-		for(Item i : itemList) {
+		for (Item i : itemList) {
 			this.itemList.add(i.getItemInformation());
 		}
 	}

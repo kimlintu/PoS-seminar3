@@ -10,7 +10,7 @@ import integration.printer.Printer;
 import model.dto.PriceInformation;
 import model.dto.PurchasedItemInformation;
 import model.dto.Receipt;
-import model.dto.CurrentSaleInformation;
+import model.dto.RecentPurchaseInformation;
 import model.pos.Sale;
 import model.util.Amount;
 import model.util.IdentificationNumber;
@@ -68,16 +68,16 @@ public class Controller {
 	 * 
 	 * @param itemID The unique id for the item that should be processed.
 	 * @param quantity Amount of items being processed.
-	 * @return An {@link CurrentSaleInformation} object containing information
+	 * @return A {@link RecentPurchaseInformation} object containing information
 	 * about the most recently purchased item and the running total.
 	 */
-	public CurrentSaleInformation processItem(IdentificationNumber itemID, int quantity) {
+	public RecentPurchaseInformation processItem(IdentificationNumber itemID, int quantity) {
 		ItemDescription itemDescription = inventorySystem.getItemDescriptionFromDatabase(itemID);
 		PurchasedItemInformation itemInfo = currentSale.addItemToSale(itemDescription, quantity);
 		
-		CurrentSaleInformation currentSaleInformation = new CurrentSaleInformation(itemInfo, currentSale.getPriceInformation());
+		RecentPurchaseInformation recentPurchase = new RecentPurchaseInformation(itemInfo, currentSale.getPriceInformation());
 		
-		return currentSaleInformation;
+		return recentPurchase;
 	}
 	
 	/**

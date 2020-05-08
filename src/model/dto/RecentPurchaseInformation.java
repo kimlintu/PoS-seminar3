@@ -4,7 +4,7 @@ package model.dto;
  * A data container with information about the most recently purchased item
  * and running total.
  */
-public final class CurrentSaleInformation {
+public final class RecentPurchaseInformation {
 	private final PurchasedItemInformation recentlyPurchasedItem;
 	private final PriceInformation runningTotal;
 	
@@ -14,7 +14,7 @@ public final class CurrentSaleInformation {
 	 * @param recentlyPurchasedItem The most recently purchased item in the sale.
 	 * @param runningTotal Up-to-date information about the price of the sale.
 	 */
-	public CurrentSaleInformation(PurchasedItemInformation recentlyPurchasedItem, PriceInformation runningTotal) {
+	public RecentPurchaseInformation(PurchasedItemInformation recentlyPurchasedItem, PriceInformation runningTotal) {
 		this.recentlyPurchasedItem = recentlyPurchasedItem;
 		this.runningTotal = runningTotal;
 	}
@@ -24,7 +24,7 @@ public final class CurrentSaleInformation {
 	 * recently processed item. 
 	 * @return An {@link PurchasedItemInformation} object.
 	 */
-	public PurchasedItemInformation getLatestItemDescription() {
+	public PurchasedItemInformation getLatestItemInformation() {
 		return recentlyPurchasedItem;
 	}
 	

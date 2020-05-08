@@ -18,10 +18,10 @@ public class ItemDescription {
 	 * Constructs an item description that is used to describe an unique item that
 	 * exists in the {@link InventorySystem}.
 	 * 
-	 * @param name      Name of the item.
-	 * @param priceInfo An {@link ItemPrice} object with information about this
-	 *                  items price.
-	 * @param id        An unique id that identifies the item.
+	 * @param name    Name of the item.
+	 * @param price   The price of the item.
+	 * @param vatRate The VAT rate of the item.
+	 * @param id      An unique id that identifies the item.
 	 */
 	public ItemDescription(String name, Amount price, Amount vatRate, IdentificationNumber id) {
 		this.name = name;
@@ -51,6 +51,7 @@ public class ItemDescription {
 
 	/**
 	 * Returns the price of this item, excluding VAT tax.
+	 * 
 	 * @return the original price as an <code>Amount</code>.
 	 */
 	public Amount getPrice() {
@@ -59,6 +60,7 @@ public class ItemDescription {
 
 	/**
 	 * Returns the VAT rate of this item.
+	 * 
 	 * @return the VAT rate as an <code>Amount</code>.
 	 */
 	public Amount getVatRate() {

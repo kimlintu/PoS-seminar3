@@ -5,7 +5,7 @@ import java.util.List;
 
 import integration.dbhandler.InventorySystem;
 import integration.dbhandler.data.ItemDescription;
-import model.dto.CurrentSaleInformation;
+import model.dto.RecentPurchaseInformation;
 import model.dto.PriceInformation;
 import model.dto.PurchasedItemInformation;
 import model.dto.Receipt;
@@ -13,7 +13,7 @@ import model.util.Amount;
 
 /**
  * This class represents the ongoing sale. It has an internal array list that
- * holds the sold items.
+ * stores the sold items.
  */
 public class Sale {
 	private List<Item> itemList;

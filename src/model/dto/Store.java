@@ -10,7 +10,7 @@ public class Store {
 	/**
 	 * Constructor.
 	 * @param name Name of the store.
-	 * @param address Addres that the store is located at.
+	 * @param address Address that the store is located at.
 	 */
 	public Store(String name, String address) {
 		this.name = name;

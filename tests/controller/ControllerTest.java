@@ -12,7 +12,7 @@ import org.junit.jupiter.api.Test;
 
 import integration.dbhandler.SystemCreator;
 import integration.dbhandler.data.ItemDescription;
-import model.dto.CurrentSaleInformation;
+import model.dto.RecentPurchaseInformation;
 import model.dto.PriceInformation;
 import model.dto.PurchasedItemInformation;
 import model.pos.Item;
@@ -59,7 +59,7 @@ class ControllerTest {
 	@Test
 	void testCorrectCurrentSaleInfo() {
 		controller.startSale();
-		CurrentSaleInformation saleInfo = controller.processItem(existingDescriptionApple.getID(), 1);
+		RecentPurchaseInformation saleInfo = controller.processItem(existingDescriptionApple.getID(), 1);
 
 		Amount expectedRunningTotal = itemPrice;
 		Amount retrievedRunningTotal = saleInfo.getRunningTotal().getTotalPrice();
@@ -68,7 +68,7 @@ class ControllerTest {
 						+ expectedRunningTotal);
 
 		ItemDescription expectedItemDescription = existingDescriptionApple;
-		ItemDescription retrievedItemDescription = saleInfo.getLatestItemDescription().getItemDescription();
+		ItemDescription retrievedItemDescription = saleInfo.getLatestItemInformation().getItemDescription();
 		assertTrue(retrievedItemDescription.equals(expectedItemDescription),
 				"Retrieved item description does not match most recently processed item.");
 
