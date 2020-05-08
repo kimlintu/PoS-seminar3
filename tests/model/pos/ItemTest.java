@@ -13,7 +13,6 @@ import integration.dbhandler.InventorySystem;
 import integration.dbhandler.SystemCreator;
 import integration.dbhandler.data.ItemDescription;
 import model.dto.PurchasedItemInformation;
-import model.dto.ItemPrice;
 import model.pos.Item;
 import model.util.Amount;
 import model.util.IdentificationNumber;
@@ -63,8 +62,7 @@ class ItemTest {
 
 	@Test
 	void testNotEqual() {
-		ItemDescription differentDescription = new ItemDescription("orange", new ItemPrice(new Amount(10), new Amount(0.1)),
-				new IdentificationNumber(1111));
+		ItemDescription differentDescription = creator.getInventorySystem().getItemDescriptionFromDatabase(new IdentificationNumber(666));
 		Item differentItem = new Item(differentDescription, 1);
 
 		assertFalse(item.equals(differentItem), "Two different items " + item.toString() + ", " + differentItem.toString() + " are equal.");

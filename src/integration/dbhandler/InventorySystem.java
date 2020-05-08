@@ -6,7 +6,6 @@ import java.util.List;
 import integration.dbhandler.data.ItemData;
 import integration.dbhandler.data.ItemDescription;
 import model.dto.PurchasedItemInformation;
-import model.dto.ItemPrice;
 import model.dto.SaleInformation;
 import model.util.Amount;
 import model.util.IdentificationNumber;
@@ -18,6 +17,7 @@ import model.util.IdentificationNumber;
  */
 public class InventorySystem {
 	private List<ItemData> itemDB;
+	private final Amount stdVatRate = new Amount(0.16);
 
 	/**
 	 * Constructs a new object and adds some data entries.
@@ -25,14 +25,14 @@ public class InventorySystem {
 	InventorySystem() {
 		itemDB = new ArrayList<>();
 
-		createDatabaseEntry(new ItemData(new ItemDescription("apple", new ItemPrice(new Amount(5), new Amount(0.16)),
+		createDatabaseEntry(new ItemData(new ItemDescription("apple", new Amount(5), stdVatRate,
 				new IdentificationNumber(123)), 54));
-		createDatabaseEntry(new ItemData(new ItemDescription("coffee", new ItemPrice(new Amount(42), new Amount(0.16)),
+		createDatabaseEntry(new ItemData(new ItemDescription("coffee", new Amount(42), stdVatRate,
 				new IdentificationNumber(666)), 12));
 		createDatabaseEntry(new ItemData(new ItemDescription("orange juice",
-				new ItemPrice(new Amount(12), new Amount(0.16)), new IdentificationNumber(492)), 5));
+				new Amount(12), stdVatRate, new IdentificationNumber(492)), 5));
 		createDatabaseEntry(new ItemData(new ItemDescription("chocolate bar",
-				new ItemPrice(new Amount(10), new Amount(0.16)), new IdentificationNumber(876)), 1)); 
+				new Amount(10), stdVatRate, new IdentificationNumber(876)), 1)); 
 	} 
 
 	/**

@@ -13,7 +13,6 @@ import org.junit.jupiter.api.Test;
 import integration.dbhandler.SystemCreator;
 import integration.dbhandler.data.ItemDescription;
 import model.dto.CurrentSaleInformation;
-import model.dto.ItemPrice;
 import model.dto.PriceInformation;
 import model.dto.PurchasedItemInformation;
 import model.pos.Item;

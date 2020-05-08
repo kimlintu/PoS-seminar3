@@ -8,13 +8,14 @@ import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import integration.dbhandler.SystemCreator;
 import integration.dbhandler.data.ItemDescription;
-import model.dto.ItemPrice;
 import model.util.Amount;
 import model.util.IdentificationNumber;
 
 class ItemDescriptionTest {
 	private ItemDescription description;
+	private SystemCreator creator;
 
 	@BeforeAll
 	static void setUpBeforeClass() throws Exception {
@@ -26,8 +27,8 @@ class ItemDescriptionTest {
 
 	@BeforeEach
 	void setUp() throws Exception {
-		description = new ItemDescription("apple", new ItemPrice(new Amount(5), new Amount(0.1)),
-				new IdentificationNumber(123));
+		creator = new SystemCreator();
+		description = creator.getInventorySystem().getItemDescriptionFromDatabase(new IdentificationNumber(123));
 	}
 
 	@AfterEach
@@ -37,7 +38,7 @@ class ItemDescriptionTest {
 	@Test
 	void testEqual() {
 		ItemDescription identicalDescription = new ItemDescription("apple",
-				new ItemPrice(new Amount(5), new Amount(0.1)), new IdentificationNumber(123));
+				new Amount(5), new Amount(0.16), new IdentificationNumber(123));
 
 		assertTrue(description.equals(identicalDescription),
 				"Item descriptions with identical IDs " + "does not equal.");
@@ -45,8 +46,7 @@ class ItemDescriptionTest {
 
 	@Test
 	void testNotEqual() {
-		ItemDescription differentDescription = new ItemDescription("orange",
-				new ItemPrice(new Amount(2), new Amount(0.1)), new IdentificationNumber(321));
+		ItemDescription differentDescription = creator.getInventorySystem().getItemDescriptionFromDatabase(new IdentificationNumber(666));
 
 		assertFalse(description.equals(differentDescription), "Item descriptions with different IDs " + "are equal.");
 	}

@@ -38,7 +38,7 @@ public class Amount {
 	
 	/**
 	 * Adds together two <code>Amount</code> values.
-	 * @param amountToAdd The other amount to add, should be greater than 0.
+	 * @param amountToAdd The amount to add to this amount.
 	 * @return A new <code>Amount</code> with the resulting sum as its value.
 	 */
 	public Amount add(Amount amountToAdd) {
@@ -47,7 +47,8 @@ public class Amount {
 	
 	/**
 	 * Subtracts one <code>Amount</code> from another <code>Amount</code>.
-	 * @param amountToAdd The other amount to subtract, should be greater than 0.
+	 * @param amountToAdd The amount to subtract from this amount, should be greater than 0 to
+	 * correctly perform subtraction.
 	 * @return A new <code>Amount</code> with the resulting difference as its value.
 	 */
 	public Amount subtract(Amount amountToSubtract) {
@@ -56,7 +57,7 @@ public class Amount {
 	
 	/**
 	 * Multiplies two <code>Amount</code> values.
-	 * @param amountToAdd The multiplier.
+	 * @param multiplicand How much to multiply this amount by.
 	 * @return A new <code>Amount</code> with the resulting product as its value.
 	 */
 	public Amount multiply(Amount multiplicand) {
@@ -65,7 +66,7 @@ public class Amount {
 	
 	/**
 	 * Multiplies an <code>Amount</code> value by an <code>int</code>.
-	 * @param amountToAdd The multiplier.
+	 * @param multiplicand How much to multiply this amount by.
 	 * @return A new <code>Amount</code> with the resulting product as its value.
 	 */
 	public Amount multiply(int multiplicand) {

@@ -11,7 +11,6 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import integration.dbhandler.data.ItemDescription;
-import model.dto.ItemPrice;
 import model.dto.SaleInformation;
 import model.pos.Sale;
 import model.util.Amount;

@@ -1,32 +1,35 @@
 package integration.dbhandler.data;
 
 import integration.dbhandler.InventorySystem;
-import model.dto.ItemPrice;
+import model.util.Amount;
 import model.util.IdentificationNumber;
 
 /**
- * This class is a data container that contains information pertaining to an item, including its
- * name, ID and its price information.
+ * This class is a data container that contains information pertaining to an
+ * item, including its name, ID and its price information.
  */
 public class ItemDescription {
 	private final String name;
-	private final ItemPrice priceInfo;
+	private final Amount price;
+	private final Amount vatRate;
 	private final IdentificationNumber id;
-	
+
 	/**
-	 * Constructs an item description that is used to describe an unique item that 
-	 * exists in the {@link InventorySystem}. 
-	 * @param name Name of the item.
-	 * @param priceInfo An {@link ItemPrice} object with information about
-	 * this items price.
-	 * @param id An unique id that identifies the item.
+	 * Constructs an item description that is used to describe an unique item that
+	 * exists in the {@link InventorySystem}.
+	 * 
+	 * @param name      Name of the item.
+	 * @param priceInfo An {@link ItemPrice} object with information about this
+	 *                  items price.
+	 * @param id        An unique id that identifies the item.
 	 */
-	public ItemDescription(String name, ItemPrice priceInfo, IdentificationNumber id) {
+	public ItemDescription(String name, Amount price, Amount vatRate, IdentificationNumber id) {
 		this.name = name;
-		this.priceInfo = priceInfo;
+		this.price = price;
+		this.vatRate = vatRate;
 		this.id = id;
 	}
-	
+
 	/**
 	 * Returns the item id that's being stored in the description.
 	 * 
@@ -35,39 +38,50 @@ public class ItemDescription {
 	public IdentificationNumber getID() {
 		return id;
 	}
-	
+
 	/**
-	 * Returns the name of the item that this <code>ItemDescription</code>
-	 * is describing.
+	 * Returns the name of the item that this <code>ItemDescription</code> is
+	 * describing.
+	 * 
 	 * @return The item <code>name</code> as a <code>String</code>.
 	 */
 	public String getName() {
 		return name;
 	}
-	
+
 	/**
-	 * Returns an {@link ItemPrice} that contains information about the item price and vat rate.
-	 * @return An <code>ItemPrice</code> object.
+	 * Returns the price of this item, excluding VAT tax.
+	 * @return the original price as an <code>Amount</code>.
 	 */
-	public ItemPrice getPriceInfo() {
-		return priceInfo;
+	public Amount getPrice() {
+		return price;
 	}
-	
+
 	/**
-	 * Compares the item description to an object. 
+	 * Returns the VAT rate of this item.
+	 * @return the VAT rate as an <code>Amount</code>.
+	 */
+	public Amount getVatRate() {
+		return vatRate;
+	}
+
+	/**
+	 * Compares the item description to an object.
 	 * 
-	 * @param anObject The object to compare the <code>ItemDescription</code> against.
-	 * @return <code>true</code> if the object represents an <code>ItemDescription</code> 
-	 * and has an {@link IdentificationNumber} equivalent to the other <code>ItemDescription</code>,
-	 * <code>false</code> otherwise.
+	 * @param anObject The object to compare the <code>ItemDescription</code>
+	 *                 against.
+	 * @return <code>true</code> if the object represents an
+	 *         <code>ItemDescription</code> and has an {@link IdentificationNumber}
+	 *         equivalent to the other <code>ItemDescription</code>,
+	 *         <code>false</code> otherwise.
 	 */
 	@Override
 	public boolean equals(Object anObject) {
-		if(anObject instanceof ItemDescription) {
+		if (anObject instanceof ItemDescription) {
 			ItemDescription i = (ItemDescription) anObject;
 			return this.id.equals(i.getID());
 		}
-		
+
 		return false;
 	}
 }

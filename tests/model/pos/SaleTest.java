@@ -14,7 +14,6 @@ import controller.Controller;
 import integration.dbhandler.SystemCreator;
 import integration.dbhandler.data.ItemDescription;
 import model.dto.PurchasedItemInformation;
-import model.dto.ItemPrice;
 import model.dto.SaleInformation;
 import model.pos.Item;
 import model.pos.Sale;
@@ -22,10 +21,11 @@ import model.util.Amount;
 import model.util.IdentificationNumber;
 
 class SaleTest {
-	SystemCreator creator;
-	Controller controller;
+	private SystemCreator creator;
 
-	Sale sale;
+	private Sale sale;
+	
+	private Amount stdVatRate;
 
 	@BeforeAll
 	static void setUpBeforeClass() throws Exception {
@@ -37,12 +37,18 @@ class SaleTest {
 
 	@BeforeEach
 	void setUp() throws Exception {
+		creator = new SystemCreator();
 		sale = new Sale();
+		
+		stdVatRate = new Amount(0.16);
 	}
 
 	@AfterEach
 	void tearDown() throws Exception {
+		stdVatRate = null;
+		
 		sale = null;
+		creator = null;
 	}
 	
 	@Test
@@ -61,12 +67,11 @@ class SaleTest {
 	@Test
 	void testAddOneItemToSale() {
 		Amount itemPrice = new Amount(5);
-		Amount itemVatRate = new Amount(0.1);
+		Amount itemVatRate = stdVatRate;
 		Amount vatTax = itemPrice.multiply(itemVatRate);
 		int purchasedQuantity = 1;
 
-		ItemDescription newItem = new ItemDescription("apple", new ItemPrice(itemPrice, itemVatRate),
-				new IdentificationNumber(123));
+		ItemDescription newItem = creator.getInventorySystem().getItemDescriptionFromDatabase(new IdentificationNumber(123));
 
 		sale.addItemToSale(newItem, purchasedQuantity);
 
@@ -91,11 +96,10 @@ class SaleTest {
 	@Test 
 	void testAddMultipleIdenticalItemsToSale() {
 		Amount itemPrice = new Amount(5);
-		Amount itemVatRate = new Amount(0.1);
+		Amount itemVatRate = stdVatRate;
 		Amount vatTax = itemPrice.multiply(itemVatRate);
 
-		ItemDescription newItem = new ItemDescription("apple", new ItemPrice(itemPrice, itemVatRate),
-				new IdentificationNumber(444));
+		ItemDescription newItem = creator.getInventorySystem().getItemDescriptionFromDatabase(new IdentificationNumber(123));
 
 		sale.addItemToSale(newItem, 1);
 		sale.addItemToSale(newItem, 1);
@@ -121,19 +125,17 @@ class SaleTest {
 	@Test 
 	void testAddMultipleDifferentItemsToSale() {
 		Amount applePrice = new Amount(5);
-		Amount orangePrice = new Amount(4);
-		Amount appleVatRate = new Amount(0.1);
-		Amount orangeVatRate = new Amount(0.1);
+		Amount coffeePrice = new Amount(42);
+		Amount appleVatRate = stdVatRate;
+		Amount coffeeVatRate = stdVatRate;
 		Amount appleVatTax = applePrice.multiply(appleVatRate);
-		Amount orangeVatTax = orangePrice.multiply(orangeVatRate);
+		Amount coffeeVatTax = coffeePrice.multiply(coffeeVatRate);
 
-		ItemDescription itemApple = new ItemDescription("apple", new ItemPrice(applePrice, appleVatRate),
-				new IdentificationNumber(444));
-		ItemDescription itemOrange = new ItemDescription("orange", new ItemPrice(orangePrice, orangeVatRate),
-				new IdentificationNumber(555));
+		ItemDescription itemApple = creator.getInventorySystem().getItemDescriptionFromDatabase(new IdentificationNumber(123));
+		ItemDescription itemCoffee = creator.getInventorySystem().getItemDescriptionFromDatabase(new IdentificationNumber(666));
 
 		sale.addItemToSale(itemApple, 1);
-		sale.addItemToSale(itemOrange, 1);
+		sale.addItemToSale(itemCoffee, 1);
 
 		SaleInformation saleInfo = sale.getSaleInformation();
 		Amount totalPrice = saleInfo.getPriceInfo().getTotalPrice();
@@ -144,14 +146,14 @@ class SaleTest {
 		PurchasedItemInformation expectedItemApple = new Item(itemApple, 1).getItemInformation();
 		assertTrue(itemList.contains(expectedItemApple), "Purchased item list does not contain the added item.");
 		
-		PurchasedItemInformation expectedItemOrange = new Item(itemOrange, 1).getItemInformation();
+		PurchasedItemInformation expectedItemOrange = new Item(itemCoffee, 1).getItemInformation();
 		assertTrue(itemList.contains(expectedItemOrange), "Purchased item list does not contain the added item.");
 
-		Amount expectedPrice = new Amount(((applePrice.add(appleVatTax)).add(orangePrice.add(orangeVatTax))).getValue());
+		Amount expectedPrice = new Amount(((applePrice.add(appleVatTax)).add(coffeePrice.add(coffeeVatTax))).getValue());
 		assertTrue(totalPrice.equals(expectedPrice),
 				"Incorrect total price " + totalPrice.getValue() + ", expected " + expectedPrice.getValue());
 		
-		Amount expectedVat = new Amount(appleVatTax.add(orangeVatTax).getValue());
+		Amount expectedVat = new Amount(appleVatTax.add(coffeeVatTax).getValue());
 		assertTrue(totalVat.equals(expectedVat),
 				"Incorrect total vat " + totalVat.getValue() + ", expected " + expectedVat.getValue());
 	}
@@ -159,11 +161,10 @@ class SaleTest {
 	@Test
 	void testAddMultipleItemsOneOperation() {
 		Amount itemPrice = new Amount(5);
-		Amount itemVatRate = new Amount(0.1);
+		Amount itemVatRate = stdVatRate;
 		Amount vatTax = itemPrice.multiply(itemVatRate);
 
-		ItemDescription newItem = new ItemDescription("apple", new ItemPrice(itemPrice, itemVatRate),
-				new IdentificationNumber(444));
+		ItemDescription newItem = creator.getInventorySystem().getItemDescriptionFromDatabase(new IdentificationNumber(123));
 
 		int purchasedQuantity = 4;
 		sale.addItemToSale(newItem, purchasedQuantity);

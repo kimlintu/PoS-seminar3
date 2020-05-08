@@ -2,7 +2,6 @@ package model.pos;
 
 import integration.dbhandler.data.ItemDescription;
 import model.dto.PurchasedItemInformation;
-import model.dto.ItemPrice;
 import model.util.Amount;
 
 /**
@@ -29,8 +28,8 @@ public class Item {
 		this.description = description;
 		this.quantity = quantity;
 
-		unitPrice = calculateItemPrice(description.getPriceInfo());
-		unitVatTax = calculateVatTax(description.getPriceInfo());
+		unitVatTax = calculateVatTax(description.getPrice(), description.getVatRate());
+		unitPrice = calculateItemPrice(description.getPrice());
 	}
 
 	/**
@@ -84,18 +83,12 @@ public class Item {
 		quantity += quantityToAdd;
 	}
 
-	private Amount calculateItemPrice(ItemPrice priceInfo) {
-		Amount itemPriceWithoutVat = priceInfo.getPriceAmount();
-		Amount itemVatTax = calculateVatTax(priceInfo);
-
-		return new Amount(itemPriceWithoutVat.add(itemVatTax).getValue());
+	private Amount calculateItemPrice(Amount price) {
+		return price.add(unitVatTax);
 	}
 
-	private Amount calculateVatTax(ItemPrice priceInfo) {
-		Amount itemPriceWithoutVat = priceInfo.getPriceAmount();
-		Amount itemVatRate = priceInfo.getVatRate();
-
-		return itemPriceWithoutVat.multiply(itemVatRate);
+	private Amount calculateVatTax(Amount price, Amount vatRate) {
+		return price.multiply(vatRate);
 	}
 
 	/**
