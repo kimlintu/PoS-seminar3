@@ -10,13 +10,11 @@ import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import controller.Controller;
 import integration.dbhandler.SystemCreator;
 import integration.dbhandler.data.ItemDescription;
+import model.dto.PriceInformation;
 import model.dto.PurchasedItemInformation;
-import model.dto.SaleInformation;
-import model.pos.Item;
-import model.pos.Sale;
+import model.dto.Receipt;
 import model.util.Amount;
 import model.util.IdentificationNumber;
 
@@ -53,9 +51,9 @@ class SaleTest {
 	
 	@Test
 	void testAddNoItemsToSale() {
-		SaleInformation saleInfo = sale.getSaleInformation();
-		Amount totalPrice = saleInfo.getPriceInfo().getTotalPrice();
-		Amount totalVat = saleInfo.getPriceInfo().getTotalVat();
+		PriceInformation priceInfo = sale.getPriceInformation();
+		Amount totalPrice = priceInfo.getTotalPrice();
+		Amount totalVat = priceInfo.getTotalVat();
 		
 		Amount expectedPrice = new Amount(0);
 		assertTrue(totalPrice.equals(expectedPrice), "Total price is greater than 0 when no item is added.");
@@ -75,9 +73,11 @@ class SaleTest {
 
 		sale.addItemToSale(newItem, purchasedQuantity);
 
-		SaleInformation saleInfo = sale.getSaleInformation();
-		Amount totalPrice = saleInfo.getPriceInfo().getTotalPrice();
-		Amount totalVat = saleInfo.getPriceInfo().getTotalVat();
+		PriceInformation priceInfo = sale.getPriceInformation();
+		Amount totalPrice = priceInfo.getTotalPrice();
+		Amount totalVat = priceInfo.getTotalVat();
+		
+		Receipt saleInfo = sale.processSale(new Amount(100), new Amount(100));
 		List<PurchasedItemInformation> itemList = saleInfo.getListOfSoldItems();
 		
 		PurchasedItemInformation expectedItem = new Item(newItem, purchasedQuantity).getItemInformation();
@@ -105,9 +105,11 @@ class SaleTest {
 		sale.addItemToSale(newItem, 1);
 		int purchasedQuantity = 2;
 
-		SaleInformation saleInfo = sale.getSaleInformation();
-		Amount totalPrice = saleInfo.getPriceInfo().getTotalPrice();
-		Amount totalVat = saleInfo.getPriceInfo().getTotalVat();
+		PriceInformation priceInfo = sale.getPriceInformation();
+		Amount totalPrice = priceInfo.getTotalPrice();
+		Amount totalVat = priceInfo.getTotalVat();
+		
+		Receipt saleInfo = sale.processSale(new Amount(100), new Amount(100));
 		List<PurchasedItemInformation> itemList = saleInfo.getListOfSoldItems();
 		
 		PurchasedItemInformation expectedItem = new Item(newItem, purchasedQuantity).getItemInformation();
@@ -137,9 +139,11 @@ class SaleTest {
 		sale.addItemToSale(itemApple, 1);
 		sale.addItemToSale(itemCoffee, 1);
 
-		SaleInformation saleInfo = sale.getSaleInformation();
-		Amount totalPrice = saleInfo.getPriceInfo().getTotalPrice();
-		Amount totalVat = saleInfo.getPriceInfo().getTotalVat();
+		PriceInformation priceInfo = sale.getPriceInformation();
+		Amount totalPrice = priceInfo.getTotalPrice();
+		Amount totalVat = priceInfo.getTotalVat();
+		
+		Receipt saleInfo = sale.processSale(new Amount(100), new Amount(100));
 		List<PurchasedItemInformation> itemList = saleInfo.getListOfSoldItems();
 		
 
@@ -169,9 +173,11 @@ class SaleTest {
 		int purchasedQuantity = 4;
 		sale.addItemToSale(newItem, purchasedQuantity);
 
-		SaleInformation saleInfo = sale.getSaleInformation();
-		Amount totalPrice = saleInfo.getPriceInfo().getTotalPrice(); 
-		Amount totalVat = saleInfo.getPriceInfo().getTotalVat();
+		PriceInformation priceInfo = sale.getPriceInformation();
+		Amount totalPrice = priceInfo.getTotalPrice();
+		Amount totalVat = priceInfo.getTotalVat();
+		
+		Receipt saleInfo = sale.processSale(new Amount(100), new Amount(100));
 		List<PurchasedItemInformation> itemList = saleInfo.getListOfSoldItems();
 		
 		PurchasedItemInformation expectedItem = new Item(newItem, purchasedQuantity).getItemInformation();

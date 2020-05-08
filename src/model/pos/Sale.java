@@ -5,14 +5,15 @@ import java.util.List;
 
 import integration.dbhandler.InventorySystem;
 import integration.dbhandler.data.ItemDescription;
+import model.dto.CurrentSaleInformation;
+import model.dto.PriceInformation;
 import model.dto.PurchasedItemInformation;
 import model.dto.Receipt;
-import model.dto.SaleInformation;
 import model.util.Amount;
 
 /**
- * This class represents the ongoing sale. It has an internal array list 
- * that holds the sold items.
+ * This class represents the ongoing sale. It has an internal array list that
+ * holds the sold items.
  */
 public class Sale {
 	private List<Item> itemList;
@@ -44,38 +45,35 @@ public class Sale {
 
 		if (itemList.contains(purchasedItem)) {
 			Item itemInList = getItemFromList(purchasedItem);
-			
+
 			updateQuantityOfItemInList(itemInList, purchasedQuantity);
 		} else {
 			addItemToList(purchasedItem);
 		}
- 
+
 		totalPrice.addToTotalPrice(purchasedItem);
 		return purchasedItem.getItemInformation();
 	}
 
 	/**
-	 * Returns a new {@link SaleInformation} object created by this instance.
+	 * Returns price information about this sale.
 	 * 
-	 * @return A <code>SaleInformation</code> object containing data from this
-	 *         <code>Sale</code>.
+	 * @return A {@link PriceInformation} object.
 	 */
-	public SaleInformation getSaleInformation() {
-		return new SaleInformation(totalPrice.getPriceInfo(), itemList);
+	public PriceInformation getPriceInformation() {
+		return totalPrice.getPriceInfo();
 	}
 
 	/**
-	 * Complete the sale and create a receipt containing the complete
-	 * sale information.
+	 * Complete the sale and create a receipt containing the complete sale
+	 * information.
 	 * 
-	 * @param saleInfo       The information about the sale specified by
-	 *                       {@link SaleInformation}.
 	 * @param amountPaid     The amount paid by the customer.
 	 * @param amountOfChange The amount of change that the customer should receive.
 	 * @return
 	 */
-	public Receipt processSale(SaleInformation saleInfo, Amount amountPaid, Amount amountOfChange) {
-		Receipt receipt = new Receipt(saleInfo, amountPaid, amountOfChange);
+	public Receipt processSale(Amount amountPaid, Amount amountOfChange) {
+		Receipt receipt = new Receipt(itemList, totalPrice.getPriceInfo(), amountPaid, amountOfChange);
 
 		return receipt;
 	}
@@ -85,7 +83,7 @@ public class Sale {
 	}
 
 	private Item getItemFromList(Item item) {
-		return itemList.get(itemList.indexOf(item)); 
+		return itemList.get(itemList.indexOf(item));
 	}
 
 	private void addItemToList(Item item) {

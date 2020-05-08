@@ -11,7 +11,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import integration.dbhandler.data.ItemDescription;
-import model.dto.SaleInformation;
+import model.dto.Receipt;
 import model.pos.Sale;
 import model.util.Amount;
 import model.util.IdentificationNumber;
@@ -64,7 +64,7 @@ class InventorySystemTest {
 		int quantityBeforeUpdate = inventory.getAvailableQuantityOfItem(existingItemID);
 
 		sale.addItemToSale(inventory.getItemDescriptionFromDatabase(existingItemID), 12);
-		SaleInformation saleInfo = sale.getSaleInformation();
+		Receipt saleInfo = sale.processSale(new Amount(100), new Amount(100));
 		
 		int expectedQuantityAfterUpdate = quantityBeforeUpdate - 12;
 

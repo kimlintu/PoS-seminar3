@@ -33,10 +33,10 @@ public class Item {
 	}
 
 	/**
-	 * Returns a container object with information about the specific items
+	 * Returns an immutable container object with information about the specific items
 	 * accumulated price, purchased quantity and the item description for the item.
 	 * 
-	 * @return An {@link PurchasedItemInformation} object.
+	 * @return A {@link PurchasedItemInformation} object.
 	 */
 	public PurchasedItemInformation getItemInformation() {
 		return new PurchasedItemInformation(this);

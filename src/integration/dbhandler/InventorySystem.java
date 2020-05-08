@@ -6,7 +6,7 @@ import java.util.List;
 import integration.dbhandler.data.ItemData;
 import integration.dbhandler.data.ItemDescription;
 import model.dto.PurchasedItemInformation;
-import model.dto.SaleInformation;
+import model.dto.Receipt;
 import model.util.Amount;
 import model.util.IdentificationNumber;
 
@@ -59,7 +59,7 @@ public class InventorySystem {
 	 * @param saleInfo The information about the sale. Contains the list 
 	 * of sold items.
 	 */
-	public void updateQuantityOfItems(SaleInformation saleInfo) {
+	public void updateQuantityOfItems(Receipt saleInfo) {
 		List<PurchasedItemInformation> itemList = saleInfo.getListOfSoldItems();
 
 		for (PurchasedItemInformation itemInfo : itemList) {

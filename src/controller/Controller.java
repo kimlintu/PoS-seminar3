@@ -11,7 +11,6 @@ import model.dto.PriceInformation;
 import model.dto.PurchasedItemInformation;
 import model.dto.Receipt;
 import model.dto.CurrentSaleInformation;
-import model.dto.SaleInformation;
 import model.pos.Sale;
 import model.util.Amount;
 import model.util.IdentificationNumber;
@@ -28,7 +27,6 @@ public class Controller {
 	private CashRegister cashRegister;
 	
 	private Sale currentSale;
-	private SaleInformation saleInfo;
 	
 	/**
 	 * Creates a new instance and initializes references to the external systems
@@ -61,9 +59,7 @@ public class Controller {
 	 * total VAT tax.
 	 */
 	public PriceInformation endSale() {
-		saleInfo = currentSale.getSaleInformation();
-		
-		return saleInfo.getPriceInfo();
+		return currentSale.getPriceInformation();
 	}
 	
 	/**
@@ -79,7 +75,7 @@ public class Controller {
 		ItemDescription itemDescription = inventorySystem.getItemDescriptionFromDatabase(itemID);
 		PurchasedItemInformation itemInfo = currentSale.addItemToSale(itemDescription, quantity);
 		
-		CurrentSaleInformation currentSaleInformation = new CurrentSaleInformation(itemInfo, currentSale.getSaleInformation().getPriceInfo());
+		CurrentSaleInformation currentSaleInformation = new CurrentSaleInformation(itemInfo, currentSale.getPriceInformation());
 		
 		return currentSaleInformation;
 	}
@@ -93,16 +89,16 @@ public class Controller {
 	 * @return The amount of change to be received by the customer.
 	 */
 	public Amount processSale(Amount amountPaid) {
-		Amount totalPrice = saleInfo.getPriceInfo().getTotalPrice();
+		Amount totalPrice = currentSale.getPriceInformation().getTotalPrice();
 		Amount amountOfChange = amountPaid.subtract(totalPrice); 
 		
 		updateBalanceInCashRegister(totalPrice);
 		
-		Receipt receipt = currentSale.processSale(saleInfo, amountPaid, amountOfChange);
+		Receipt receipt = currentSale.processSale(amountPaid, amountOfChange);
 		
 		accountingSystem.updateAccounting(receipt);
 		saleLog.logSale(receipt);
-		inventorySystem.updateQuantityOfItems(saleInfo);
+		inventorySystem.updateQuantityOfItems(receipt);
 		
 		printer.printReceipt(receipt);
 		

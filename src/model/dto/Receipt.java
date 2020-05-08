@@ -2,8 +2,10 @@ package model.dto;
 
 import java.time.LocalDate;
 import java.time.LocalTime;
+import java.util.ArrayList;
 import java.util.List;
 
+import model.pos.Item;
 import model.util.Amount;
 
 /**
@@ -11,7 +13,8 @@ import model.util.Amount;
  * and the time of the sale. 
  */
 public class Receipt {
-	private final SaleInformation saleInfo;
+	private final List<PurchasedItemInformation> itemList;
+	private final PriceInformation priceInfo;
 	private final Amount amountPaid;
 	private final Amount changeAmount;
 	private final Store store;
@@ -29,23 +32,34 @@ public class Receipt {
 	 * @param timeOfSale   The time which this receipt will be created and thus mark
 	 *                     the time of the completed sale.
 	 */
-	public Receipt(SaleInformation saleInfo, Amount amountPaid, Amount changeAmount) {
-		this.saleInfo = saleInfo;
+	public Receipt(List<Item> itemList, PriceInformation priceInfo, Amount amountPaid, Amount changeAmount) {
+		this.itemList = new ArrayList<>();
+		this.priceInfo = priceInfo;
 		this.amountPaid = amountPaid;
 		this.changeAmount = changeAmount;
 		this.timeOfSale = LocalTime.now();
 		this.dateOfSale = LocalDate.now();
 
 		this.store = new Store("Real Store", "Real Street 123");
+		
+		createImmutableItemList(itemList);
 	}
 
 	/**
-	 * Returns information about the sale stored in {@link SaleInformation}.
-	 * 
-	 * @return An <code>SaleInformation</code> object.
+	 * Returns a list that contains immutable data objects
+	 * of the sold items. 
+	 * @return An array list.
 	 */
-	public SaleInformation getSaleInformation() {
-		return saleInfo;
+	public List<PurchasedItemInformation> getListOfSoldItems() {
+		return itemList;
+	}
+	
+	/**
+	 * Returns the price information of the sale.
+	 * @return A {@link PriceInformation} object.
+	 */
+	public PriceInformation getPriceInfo() {
+		return priceInfo;
 	}
 
 	/**
@@ -84,14 +98,25 @@ public class Receipt {
 	public Store getStore() {
 		return store;
 	}
+	
+	/**
+	 * Creates a list with immutable item objects from the items
+	 * that has been sold.
+	 * @param itemList The list of items that was sold.
+	 * @return a new list with immutable data containers with information about
+	 * each sold item.
+	 */
+	private void createImmutableItemList(List<Item> itemList) {
+		for(Item i : itemList) {
+			this.itemList.add(i.getItemInformation());
+		}
+	}
 
 	/**
 	 * The string representation for the receipt.
 	 */
 	public String toString() {
 		StringBuilder sb = new StringBuilder();
-
-		List<PurchasedItemInformation> itemList = saleInfo.getListOfSoldItems();
 
 		sb.append("-----------------Receipt-----------------\n");
 		sb.append(String.format("%s %35s\n\n", timeOfSale.withNano(0).withSecond(0), dateOfSale));
@@ -100,7 +125,7 @@ public class Receipt {
 			sb.append(productInfo.toString() + "\n");
 		}
 		sb.append("\n-----------------------------------------\n");
-		sb.append(String.format("%s\n", saleInfo.getPriceInfo().toString()));
+		sb.append(String.format("%s\n", priceInfo.toString()));
 		sb.append("-----------------------------------------\n");
 		sb.append("Amount paid: " + amountPaid + "\n");
 		sb.append("Change received: " + changeAmount + "\n");
