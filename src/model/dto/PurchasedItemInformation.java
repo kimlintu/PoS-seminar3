@@ -28,9 +28,9 @@ public final class PurchasedItemInformation {
 		this.description = item.getItemDescription();
 		this.unitPrice = item.getUnitPrice();
 		this.unitVatTax = item.getUnitVatTax();
-		this.accumulatedPrice = item.getAccumulatedPrice();
-		this.accumulatedVatTax = item.getAccumulatedVatTax();
 		this.quantity = item.getQuantity();
+		this.accumulatedPrice = unitPrice.multiply(quantity);
+		this.accumulatedVatTax = unitVatTax.multiply(quantity);
 	}
 
 	/**

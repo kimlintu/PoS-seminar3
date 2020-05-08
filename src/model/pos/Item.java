@@ -15,8 +15,6 @@ public class Item {
 	private int quantity;
 	private final Amount unitPrice;
 	private final Amount unitVatTax;
-	private Amount accumulatedPrice;
-	private Amount accumulatedVatTax;
 
 	/**
 	 * Constructs a new <code>Item</code> and initializes its description and
@@ -33,8 +31,6 @@ public class Item {
 
 		unitPrice = calculateItemPrice(description.getPriceInfo());
 		unitVatTax = calculateVatTax(description.getPriceInfo());
-		accumulatedPrice = new Amount(unitPrice.multiply(quantity));
-		accumulatedVatTax = new Amount(unitVatTax.multiply(quantity));
 	}
 
 	/**
@@ -80,44 +76,12 @@ public class Item {
 	}
 
 	/**
-	 * Returns the current total price of this item.
-	 * @return the accumulated price as an <code>Amount</code>.
-	 */
-	public Amount getAccumulatedPrice() {
-		return accumulatedPrice;
-	}
-
-	/**
-	 * Returns the current total VAT tax of this item.
-	 * @return the accumulated VAT tax as an <code>Amount</code>.
-	 */
-	public Amount getAccumulatedVatTax() {
-		return accumulatedVatTax;
-	}
-
-	/**
 	 * Increase the quantity of this item that's being purchased.
 	 * 
 	 * @param quantityToAdd How much to increase the quantity.
 	 */
 	void addToQuantity(int quantityToAdd) {
 		quantity += quantityToAdd;
-	}
-
-	/**
-	 * Increase the total cost of this type of item. This method will
-	 * also increase the total VAT tax.
-	 * 
-	 * @param quantity How many of this item that's being processed.
-	 */
-	void increaseAccumulatedPrice(int quantity) {
-		accumulatedPrice = accumulatedPrice.add(unitPrice.multiply(quantity));
-
-		increaseAccumulatedVatTax(quantity);
-	}
-
-	private void increaseAccumulatedVatTax(int quantity) {
-		accumulatedVatTax = accumulatedVatTax.add(unitVatTax.multiply(quantity));
 	}
 
 	private Amount calculateItemPrice(ItemPrice priceInfo) {

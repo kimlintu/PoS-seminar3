@@ -45,7 +45,7 @@ class ItemTest {
 	
 	@Test
 	void testCorrectCalculatedPrice() {
-		double calculatedPrice = 5 + (0.1 * 5);
+		double calculatedPrice = 5 + (0.16 * 5);
 		Amount finalPrice = new Amount(calculatedPrice);
 
 		PurchasedItemInformation itemInfo = item.getItemInformation();
