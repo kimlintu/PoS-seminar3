@@ -5,7 +5,6 @@ import java.util.List;
 
 import integration.dbhandler.InventorySystem;
 import integration.dbhandler.data.ItemDescription;
-import model.dto.RecentPurchaseInformation;
 import model.dto.PriceInformation;
 import model.dto.PurchasedItemInformation;
 import model.dto.Receipt;
@@ -32,7 +31,7 @@ public class Sale {
 	 * Creates a new {@link Item} object containing the <code>itemDescription</code>
 	 * and the <code>quantity</code> and adds it to the internal item list. If an
 	 * identical item already exists in the list, the program will instead update
-	 * the quantity and price of that item.
+	 * the quantity of that item.
 	 * 
 	 * @param itemDescription   description of the item that's stored in the
 	 *                          {@link InventorySystem}.

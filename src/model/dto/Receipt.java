@@ -104,8 +104,7 @@ public class Receipt {
 	 * Creates a list with immutable item objects from the items that has been sold.
 	 * 
 	 * @param itemList The list of items that was sold.
-	 * @return a new list with immutable data containers with information about each
-	 *         sold item.
+	 * @return a new list containing immutable data about each sold item
 	 */
 	private void createImmutableItemList(List<Item> itemList) {
 		for (Item i : itemList) {

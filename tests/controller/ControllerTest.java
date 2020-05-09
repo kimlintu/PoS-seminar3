@@ -2,7 +2,6 @@ package controller;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-import java.math.BigDecimal;
 
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.AfterEach;
@@ -14,8 +13,6 @@ import integration.dbhandler.SystemCreator;
 import integration.dbhandler.data.ItemDescription;
 import model.dto.RecentPurchaseInformation;
 import model.dto.PriceInformation;
-import model.dto.PurchasedItemInformation;
-import model.pos.Item;
 import model.util.Amount;
 import model.util.IdentificationNumber;
 

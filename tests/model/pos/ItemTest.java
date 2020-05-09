@@ -9,7 +9,6 @@ import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import integration.dbhandler.InventorySystem;
 import integration.dbhandler.SystemCreator;
 import integration.dbhandler.data.ItemDescription;
 import model.dto.PurchasedItemInformation;
