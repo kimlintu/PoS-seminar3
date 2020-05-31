@@ -47,7 +47,7 @@ public class Sale {
 
 			updateQuantityOfItemInList(itemInList, purchasedQuantity);
 		} else {
-			addItemToList(purchasedItem);
+			itemList.add(purchasedItem);
 		}
 
 		totalPrice.addToTotalPrice(purchasedItem);
@@ -83,9 +83,5 @@ public class Sale {
 
 	private Item getItemFromList(Item item) {
 		return itemList.get(itemList.indexOf(item));
-	}
-
-	private void addItemToList(Item item) {
-		itemList.add(item);
 	}
 }

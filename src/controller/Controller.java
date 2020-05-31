@@ -97,13 +97,17 @@ public class Controller {
 		
 		Receipt receipt = currentSale.processSale(amountPaid, amountOfChange);
 		
-		accountingSystem.updateAccounting(receipt);
-		saleLog.logSale(receipt);
-		inventorySystem.updateQuantityOfItems(receipt);
+		notifyExternalSystemHandlers(receipt);
 		
 		printer.printReceipt(receipt);
 		
 		return amountOfChange;
+	}
+	
+	private void notifyExternalSystemHandlers(Receipt receipt) {
+		accountingSystem.updateAccounting(receipt);
+		saleLog.logSale(receipt);
+		inventorySystem.updateQuantityOfItems(receipt);
 	}
 	
 	private Amount updateBalanceInCashRegister(Amount totalPrice) {
