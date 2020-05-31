@@ -39,6 +39,9 @@ class ItemTest {
 
 	@AfterEach
 	void tearDown() throws Exception {
+		creator = null;
+		description = null;
+		item = null;
 	}
 	
 	@Test

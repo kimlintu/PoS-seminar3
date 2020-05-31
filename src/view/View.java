@@ -58,11 +58,11 @@ public class View {
 		startSale();
 		
 		IdentificationNumber validIDs[] = { new IdentificationNumber(123), new IdentificationNumber(666),
-				new IdentificationNumber(492), new IdentificationNumber(876) };
-		for(int i = 0; i < 4; i++) {
+				new IdentificationNumber(492), new IdentificationNumber(876), new IdentificationNumber(492) };
+		for(int i = 0; i < validIDs.length; i++) {
 			int quantity = rand.nextInt(9) + 1;
 			
-			System.out.println("Purchasing " + quantity + " item(s) with id " + validIDs[i].toString());
+			System.out.println("*Purchasing " + quantity + " item(s) with id " + validIDs[i].toString() + "*");
 			RecentPurchaseInformation recentSaleInformation = enterItemIdentifier(validIDs[i], quantity);
 			System.out.println(recentSaleInformation);
 		}
@@ -70,9 +70,9 @@ public class View {
 		PriceInformation totalPriceInfo = endSale();
 		System.out.println("[" + totalPriceInfo + "]" + "\n");
 		Amount amountPaid = totalPriceInfo.getTotalPrice().add(new Amount(rand.nextDouble() * 200 + 1));
-		System.out.println("Customer pays " + amountPaid);
+		System.out.println("*Customer pays " + amountPaid + "*");
 		
-		System.out.println("Processing sale and printing receipt..\n");
+		System.out.println("*Processing sale and printing receipt..*\n");
 		enterAmountPaid(amountPaid);
 	}
 }

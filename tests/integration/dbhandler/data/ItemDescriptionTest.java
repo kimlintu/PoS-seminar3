@@ -33,6 +33,8 @@ class ItemDescriptionTest {
 
 	@AfterEach
 	void tearDown() throws Exception {
+		creator = null;
+		description = null;
 	}
 
 	@Test

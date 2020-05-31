@@ -1,7 +1,7 @@
 package controller;
 
-import static org.junit.jupiter.api.Assertions.*;
-
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.AfterEach;
@@ -9,10 +9,11 @@ import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import integration.cashregister.CashRegister;
 import integration.dbhandler.SystemCreator;
 import integration.dbhandler.data.ItemDescription;
-import model.dto.RecentPurchaseInformation;
 import model.dto.PriceInformation;
+import model.dto.RecentPurchaseInformation;
 import model.util.Amount;
 import model.util.IdentificationNumber;
 
@@ -36,7 +37,8 @@ class ControllerTest {
 	@BeforeEach
 	void setUp() throws Exception {
 		SystemCreator creator = new SystemCreator();
-		controller = new Controller(creator);
+		CashRegister register = new CashRegister();
+		controller = new Controller(creator, register);
 
 		existingDescriptionApple = creator.getInventorySystem()
 				.getItemDescriptionFromDatabase(new IdentificationNumber(123));
@@ -51,6 +53,9 @@ class ControllerTest {
 	void tearDown() throws Exception {
 		controller = null;
 		existingDescriptionApple = null;
+		existingDescriptionCoffee = null;
+		itemVatTax = null;
+		itemPrice = null;
 	}
 
 	@Test

@@ -7,6 +7,7 @@ import integration.dbhandler.SaleLog;
 import integration.dbhandler.SystemCreator;
 import integration.dbhandler.data.ItemDescription;
 import integration.printer.Printer;
+import model.dto.Change;
 import model.dto.PriceInformation;
 import model.dto.PurchasedItemInformation;
 import model.dto.Receipt;
@@ -36,13 +37,13 @@ public class Controller {
 	 * @param creator A {@link SystemCreator} object that has references to all the 
 	 * external systems.
 	 */
-	public Controller(SystemCreator creator) {
+	public Controller(SystemCreator creator, CashRegister cashRegister) {
 		inventorySystem = creator.getInventorySystem();
 		accountingSystem = creator.getAccountingSystem();
 		saleLog = creator.getSaleLog();
 		
 		printer = new Printer();
-		cashRegister = new CashRegister();
+		this.cashRegister = cashRegister;
 	}
 	
 	/**
@@ -90,7 +91,7 @@ public class Controller {
 	 */
 	public Amount processSale(Amount amountPaid) {
 		Amount totalPrice = currentSale.getPriceInformation().getTotalPrice();
-		Amount amountOfChange = amountPaid.subtract(totalPrice); 
+		Amount amountOfChange = new Change(totalPrice, amountPaid).getAmount();
 		
 		updateBalanceInCashRegister(totalPrice);
 		
