@@ -33,8 +33,9 @@ public class Item {
 	}
 
 	/**
-	 * Returns an immutable container object with information about the specific items
-	 * accumulated price, purchased quantity and the item description for the item.
+	 * Returns an immutable container object with information about the specific
+	 * items accumulated price, purchased quantity and the item description for the
+	 * item.
 	 * 
 	 * @return A {@link PurchasedItemInformation} object.
 	 */
@@ -42,8 +43,9 @@ public class Item {
 		return new PurchasedItemInformation(this);
 	}
 
-	/** 
+	/**
 	 * Returns the total quantity of this item that has been sold.
+	 * 
 	 * @return the quantity as an <code>int</code>.
 	 */
 	public int getQuantity() {
@@ -52,6 +54,7 @@ public class Item {
 
 	/**
 	 * Returns the related item description to this item.
+	 * 
 	 * @return the related <code>ItemDescription</code>.
 	 */
 	public ItemDescription getItemDescription() {
@@ -59,7 +62,8 @@ public class Item {
 	}
 
 	/**
-	 * Returns the price per unit of this item.
+	 * Returns the price per unit of this item. This also includes the unit VAT tax.
+	 * 
 	 * @return the unit price as an <code>Amount</code>.
 	 */
 	public Amount getUnitPrice() {
@@ -68,6 +72,7 @@ public class Item {
 
 	/**
 	 * Returns the VAT tax per unit of this item.
+	 * 
 	 * @return the unit VAT tax as an <code>Amount</code>.
 	 */
 	public Amount getUnitVatTax() {

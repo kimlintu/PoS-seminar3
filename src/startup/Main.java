@@ -8,9 +8,8 @@ import view.View;
 public class Main {
 	public static void main(String[] args) {
 		SystemCreator creator = new SystemCreator();
-		CashRegister register = new CashRegister();
 		
-		Controller controller = new Controller(creator, register);
+		Controller controller = new Controller(creator);
 		View view = new View(controller);
 		
 		view.testRun();

@@ -37,8 +37,7 @@ class ControllerTest {
 	@BeforeEach
 	void setUp() throws Exception {
 		SystemCreator creator = new SystemCreator();
-		CashRegister register = new CashRegister();
-		controller = new Controller(creator, register);
+		controller = new Controller(creator);
 
 		existingDescriptionApple = creator.getInventorySystem()
 				.getItemDescriptionFromDatabase(new IdentificationNumber(123));

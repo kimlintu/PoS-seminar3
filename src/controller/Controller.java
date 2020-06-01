@@ -37,13 +37,13 @@ public class Controller {
 	 * @param creator A {@link SystemCreator} object that has references to all the 
 	 * external systems.
 	 */
-	public Controller(SystemCreator creator, CashRegister cashRegister) {
+	public Controller(SystemCreator creator) {
 		inventorySystem = creator.getInventorySystem();
 		accountingSystem = creator.getAccountingSystem();
 		saleLog = creator.getSaleLog();
 		
 		printer = new Printer();
-		this.cashRegister = cashRegister;
+		cashRegister = new CashRegister();
 	}
 	
 	/**
